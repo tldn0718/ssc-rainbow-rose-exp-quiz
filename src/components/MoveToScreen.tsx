@@ -22,7 +22,7 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
       : "잘 해결했어요, 이제 다음 전시물로 갈 차례입니다!";
 
   const highlightLabel = `'${exhibit.code} ${exhibit.title}'`;
-  const mapSrc = `/assets/map-route-${exhibit.code}.png`;
+  const mapSrc = `/assets/map-route-${exhibit.code}.webp`;
 
   return (
     <div
