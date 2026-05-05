@@ -46,6 +46,7 @@ export type QuizMeta = {
   emergencySuccessNotice: string;
   exhibitionIntroTitle: string;
   exhibitionIntroBody: string;
+  exhibitionIntroNotice: string;
   exhibitsOverviewTitle: string;
   moveToFirstTitle: string;
   moveToNextTitle: string;

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import type { Exhibit, QuizMeta } from "../types";
 import { Sparkles } from "./Sparkles";
 import { PinkButton } from "./PinkButton";
@@ -9,13 +10,69 @@ type Props = {
   onNext: () => void;
 };
 
-const TOP_CODES = ["B42", "B47", "B12"];
-const BOTTOM_CODES = ["B41", "B26"];
+const TOP_CODES = ["B42", "B47", "B12"] as const;
+const BOTTOM_CODES = ["B41", "B26"] as const;
+const ALL_CODES = [...TOP_CODES, ...BOTTOM_CODES] as const;
+
+type Arrow = {
+  code: string;
+  fromX: number;
+  fromY: number;
+  toX: number;
+  toY: number;
+};
 
 export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
   const byCode = Object.fromEntries(exhibits.map((e) => [e.code, e]));
   const topRow = TOP_CODES.map((c) => byCode[c]).filter(Boolean);
   const bottomRow = BOTTOM_CODES.map((c) => byCode[c]).filter(Boolean);
+
+  const layerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [arrows, setArrows] = useState<Arrow[]>([]);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    const layer = layerRef.current;
+    if (!layer) return;
+    const measure = () => {
+      const lb = layer.getBoundingClientRect();
+      setSize({ w: lb.width, h: lb.height });
+      const next: Arrow[] = [];
+      for (const code of ALL_CODES) {
+        const card = cardRefs.current[code];
+        const pin = layer.querySelector(`[data-pin-code="${code}"]`);
+        if (!card || !pin) continue;
+        const cb = card.getBoundingClientRect();
+        const pb = pin.getBoundingClientRect();
+        const isTop = (TOP_CODES as readonly string[]).includes(code);
+        // 핀(빨간 원) 중심
+        const cx = pb.left + pb.width / 2 - lb.left;
+        const cy = pb.top + pb.height / 2 - lb.top;
+        // 카드의 화살표 도착점
+        const tx = cb.left + cb.width / 2 - lb.left;
+        const ty = (isTop ? cb.bottom : cb.top) - lb.top;
+        // 화살표 시작점을 원 중심에서 카드 방향으로 (반지름 + 여백)만큼 offset
+        // → 화살표가 원 둘레에서 출발하므로 원 안쪽 숫자를 가리지 않음
+        const dx = tx - cx;
+        const dy = ty - cy;
+        const len = Math.hypot(dx, dy) || 1;
+        const radius = pb.width / 2 + 3;
+        const fromX = cx + (dx / len) * radius;
+        const fromY = cy + (dy / len) * radius;
+        next.push({ code, fromX, fromY, toX: tx, toY: ty });
+      }
+      setArrows(next);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(layer);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   return (
     <div className="relative min-h-[100dvh] flex flex-col overflow-x-hidden bg-sky-1">
@@ -35,34 +92,75 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
           {meta.exhibitsOverviewTitle}
         </h2>
 
-        <div className="mt-5 grid grid-cols-3 gap-2">
-          {topRow.map((ex, i) => (
-            <ExhibitCard
-              key={ex.id}
-              exhibit={ex}
-              direction="down"
-              tilt={i === 0 ? -3 : i === 2 ? 3 : 0}
-            />
-          ))}
+        <div ref={layerRef} className="relative mt-5 flex-1 flex flex-col">
+          <div className="grid grid-cols-3 gap-2 relative z-10">
+            {topRow.map((ex, i) => (
+              <ExhibitCard
+                key={ex.id}
+                exhibit={ex}
+                tilt={i === 0 ? -3 : i === 2 ? 3 : 0}
+                cardRef={(el) => {
+                  cardRefs.current[ex.code] = el;
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="mt-8 relative z-0">
+            <HallMap exhibits={exhibits} />
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-3 relative z-10">
+            {bottomRow.map((ex, i) => (
+              <ExhibitCard
+                key={ex.id}
+                exhibit={ex}
+                tilt={i === 0 ? -3 : 3}
+                cardRef={(el) => {
+                  cardRefs.current[ex.code] = el;
+                }}
+              />
+            ))}
+          </div>
+
+          {/* 카드 ↔ 핀 화살표 SVG overlay (지도 위 / 카드 아래) */}
+          <svg
+            className="pointer-events-none absolute inset-0 z-[5]"
+            width={size.w}
+            height={size.h}
+            viewBox={`0 0 ${size.w} ${size.h}`}
+            aria-hidden
+          >
+            <defs>
+              <marker
+                id="arrow-head"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFD84D" />
+              </marker>
+            </defs>
+            {arrows.map((a) => (
+              <line
+                key={a.code}
+                x1={a.fromX}
+                y1={a.fromY}
+                x2={a.toX}
+                y2={a.toY}
+                stroke="#FFD84D"
+                strokeWidth="3"
+                strokeLinecap="round"
+                markerEnd="url(#arrow-head)"
+              />
+            ))}
+          </svg>
         </div>
 
-        <div className="mt-4">
-          <HallMap exhibits={exhibits} />
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          {bottomRow.map((ex, i) => (
-            <ExhibitCard
-              key={ex.id}
-              exhibit={ex}
-              direction="up"
-              tilt={i === 0 ? -3 : 3}
-            />
-          ))}
-        </div>
-
-        <div className="flex-1 min-h-[24px]" />
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-6">
           <PinkButton onClick={onNext}>{meta.startQuizButton}</PinkButton>
         </div>
       </div>
@@ -72,15 +170,16 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
 
 function ExhibitCard({
   exhibit,
-  direction,
   tilt = 0,
+  cardRef,
 }: {
   exhibit: Exhibit;
-  direction: "up" | "down";
   tilt?: number;
+  cardRef?: (el: HTMLDivElement | null) => void;
 }) {
   return (
     <div
+      ref={cardRef}
       className="flex flex-col items-center"
       style={{ transform: `rotate(${tilt}deg)` }}
     >
@@ -107,28 +206,6 @@ function ExhibitCard({
           {exhibit.title}
         </div>
       </div>
-      <Arrow direction={direction} />
     </div>
-  );
-}
-
-function Arrow({ direction }: { direction: "up" | "down" }) {
-  return (
-    <svg
-      width="24"
-      height="22"
-      viewBox="0 0 24 22"
-      className={direction === "up" ? "rotate-180 -mt-1" : "-mb-1 mt-1"}
-      aria-hidden
-    >
-      <path
-        d="M12 0 L12 14 M5 8 L12 16 L19 8"
-        stroke="#FFD84D"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
   );
 }

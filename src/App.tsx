@@ -126,7 +126,6 @@ export default function App() {
               question={q}
               exhibit={exhibit}
               questionNumber={step.questionIndex + 1}
-              totalQuestions={totalQuestions}
               progressCurrent={progressCurrent}
               progressTotal={totalQuestions}
               onNext={goNext}

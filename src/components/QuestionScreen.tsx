@@ -8,7 +8,6 @@ type Props = {
   question: Question;
   exhibit: Exhibit;
   questionNumber: number;
-  totalQuestions: number;
   progressCurrent: number;
   progressTotal: number;
   onNext: () => void;
@@ -23,7 +22,6 @@ export function QuestionScreen({
   question,
   exhibit,
   questionNumber,
-  totalQuestions,
   progressCurrent,
   progressTotal,
   onNext,
@@ -32,8 +30,6 @@ export function QuestionScreen({
   const [oxAnswer, setOxAnswer] = useState<"O" | "X" | null>(null);
   const [shortInput, setShortInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
-  const isLast = questionNumber === totalQuestions;
 
   const isCorrect = useMemo(() => {
     if (!submitted) return false;
