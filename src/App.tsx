@@ -55,8 +55,6 @@ export default function App() {
   const isFirstMoveTo = (exhibitIndex: number) => exhibitIndex === 0;
   const isLastMoveTo = (exhibitIndex: number) =>
     exhibitIndex === exhibits.length - 1;
-  const previousExhibitCode = (exhibitIndex: number) =>
-    exhibitIndex > 0 ? exhibits[exhibitIndex - 1].code : undefined;
 
   let progressCurrent = 0;
   if (step.kind === "question") {
@@ -80,7 +78,6 @@ export default function App() {
           exhibit={exhibits[step.exhibitIndex]}
           isFirst={isFirstMoveTo(step.exhibitIndex)}
           isLast={isLastMoveTo(step.exhibitIndex)}
-          previousExhibitCode={previousExhibitCode(step.exhibitIndex)}
           onNext={goNext}
         />
       )}

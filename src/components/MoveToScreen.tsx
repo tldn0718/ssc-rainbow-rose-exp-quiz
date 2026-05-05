@@ -1,28 +1,19 @@
 import type { Exhibit } from "../types";
-import { exhibits } from "../data";
 import { PinkButton } from "./PinkButton";
-import { HallMap } from "./HallMap";
 
 type Props = {
   exhibit: Exhibit;
   isFirst: boolean;
   isLast: boolean;
-  previousExhibitCode?: string;
   onNext: () => void;
 };
 
-export function MoveToScreen({
-  exhibit,
-  isFirst,
-  isLast,
-  previousExhibitCode,
-  onNext,
-}: Props) {
-  const title = isFirst
-    ? "무지개장미탐험대\n첫번째 전시물로 출발!"
+export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
+  const titleSrc = isFirst
+    ? "/assets/move-title-first.png"
     : isLast
-      ? "마지막 전시물로\n이동해주세요"
-      : "다음 전시물로\n이동해주세요";
+      ? "/assets/move-title-last.png"
+      : "/assets/move-title-next.png";
 
   const subtitle = isFirst
     ? "무지개 장미 탐험대의 미션, 지금 시작합니다!"
@@ -31,6 +22,7 @@ export function MoveToScreen({
       : "잘 해결했어요, 이제 다음 전시물로 갈 차례입니다!";
 
   const highlightLabel = `'${exhibit.code} ${exhibit.title}'`;
+  const mapSrc = `/assets/map-route-${exhibit.code}.png`;
 
   return (
     <div
@@ -43,23 +35,15 @@ export function MoveToScreen({
         backgroundColor: "#E8F8FA",
       }}
     >
-      <div className="relative px-5 pt-10 pb-6 flex-1 flex flex-col">
-        <h2
-          className="font-display text-[28px] text-center leading-[1.15] whitespace-pre-line"
-          style={{
-            fontFamily: "'Black Han Sans','Jua',sans-serif",
-            color: "#fff",
-            WebkitTextStroke: "1.2px #1f2937",
-            paintOrder: "stroke fill",
-            textShadow: "0 3px 0 #1f2937",
-            letterSpacing: "0.02em",
-          }}
-        >
-          {title}
-        </h2>
+      <div className="relative px-5 pt-8 pb-6 flex-1 flex flex-col">
+        <img
+          src={titleSrc}
+          alt=""
+          className="mx-auto h-[78px] w-auto"
+        />
 
         <p
-          className="mt-3 text-center text-[14px] font-semibold"
+          className="mt-2 text-center text-[14px] font-semibold"
           style={{
             color: "#fff",
             textShadow: "0 1px 2px rgba(31,41,55,0.35)",
@@ -68,7 +52,7 @@ export function MoveToScreen({
           {subtitle}
         </p>
 
-        <div className="mt-6 flex items-start gap-3">
+        <div className="mt-5 flex items-start gap-3">
           <div className="w-[32%] aspect-square rounded-xl overflow-hidden bg-slate-700 shadow-card flex-shrink-0">
             {exhibit.photo && (
               <img
@@ -101,11 +85,10 @@ export function MoveToScreen({
         </div>
 
         <div className="mt-5">
-          <HallMap
-            exhibits={exhibits}
-            highlightCode={exhibit.code}
-            routeFromCode={previousExhibitCode}
-            routeFromEntrance={isFirst}
+          <img
+            src={mapSrc}
+            alt={`${exhibit.code} 위치 지도`}
+            className="w-full h-auto"
           />
         </div>
 
