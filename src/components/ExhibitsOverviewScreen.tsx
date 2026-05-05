@@ -1,12 +1,11 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import type { Exhibit, QuizMeta } from "../types";
+import type { Exhibit } from "../types";
+import { exhibits } from "../data";
 import { Sparkles } from "./Sparkles";
 import { PinkButton } from "./PinkButton";
 import { HallMap } from "./HallMap";
 
 type Props = {
-  meta: QuizMeta;
-  exhibits: Exhibit[];
   onNext: () => void;
 };
 
@@ -22,7 +21,7 @@ type Arrow = {
   toY: number;
 };
 
-export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
+export function ExhibitsOverviewScreen({ onNext }: Props) {
   const byCode = Object.fromEntries(exhibits.map((e) => [e.code, e]));
   const topRow = TOP_CODES.map((c) => byCode[c]).filter(Boolean);
   const bottomRow = BOTTOM_CODES.map((c) => byCode[c]).filter(Boolean);
@@ -46,14 +45,10 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
         const cb = card.getBoundingClientRect();
         const pb = pin.getBoundingClientRect();
         const isTop = (TOP_CODES as readonly string[]).includes(code);
-        // 핀(빨간 원) 중심
         const cx = pb.left + pb.width / 2 - lb.left;
         const cy = pb.top + pb.height / 2 - lb.top;
-        // 카드의 화살표 도착점
         const tx = cb.left + cb.width / 2 - lb.left;
         const ty = (isTop ? cb.bottom : cb.top) - lb.top;
-        // 화살표 시작점을 원 중심에서 카드 방향으로 (반지름 + 여백)만큼 offset
-        // → 화살표가 원 둘레에서 출발하므로 원 안쪽 숫자를 가리지 않음
         const dx = tx - cx;
         const dy = ty - cy;
         const len = Math.hypot(dx, dy) || 1;
@@ -89,7 +84,7 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
             textShadow: "0 3px 0 #1f2937",
           }}
         >
-          {meta.exhibitsOverviewTitle}
+          해당 전시물 소개
         </h2>
 
         <div ref={layerRef} className="relative mt-5 flex-1 flex flex-col">
@@ -123,7 +118,6 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
             ))}
           </div>
 
-          {/* 카드 ↔ 핀 화살표 SVG overlay (지도 위 / 카드 아래) */}
           <svg
             className="pointer-events-none absolute inset-0 z-[5]"
             width={size.w}
@@ -161,7 +155,7 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
         </div>
 
         <div className="flex justify-center pt-6">
-          <PinkButton onClick={onNext}>{meta.startQuizButton}</PinkButton>
+          <PinkButton onClick={onNext}>시작하기</PinkButton>
         </div>
       </div>
     </div>

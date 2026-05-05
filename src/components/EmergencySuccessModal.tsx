@@ -1,15 +1,23 @@
-import type { QuizMeta } from "../types";
-
 type Props = {
-  meta: QuizMeta;
   onClose: () => void;
 };
 
-/**
- * Emergency 안내 화면 위에 떠 있는 "모집 완료" 팝업.
- * 어두운 오버레이 + 모달 윈도우 + 하단 안내 박스.
- */
-export function EmergencySuccessModal({ meta, onClose }: Props) {
+const BODY = `무지개 장미 탐험대가 되어주신 여러분
+감사합니다!
+
+지금부터 전시물을 찾아가며
+패널을 꼼꼼히 살펴보고 직접 체험해보면서
+준비된 퀴즈를 하나씩 풀어주세요.
+
+총 10개의 퀴즈를 모두 해결하면
+'무지개 장미'의 신비로운 비밀을
+알아낼 수 있습니다.`;
+
+const NOTICE = `B전시실 내에서 본 활동지의 모든 퀴즈를
+해결하시면 소정의 기념품을 받을 수 있습니다.
+※ 기념품은 조기 소진될 수 있습니다.`;
+
+export function EmergencySuccessModal({ onClose }: Props) {
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col px-5 pb-6 animate-fade-up"
@@ -17,7 +25,6 @@ export function EmergencySuccessModal({ meta, onClose }: Props) {
       onClick={onClose}
     >
       <div className="flex-1 flex items-center justify-center min-h-0">
-        {/* 모달 윈도우: 진한 파란 chrome + 검정 외곽선 + 흰 본문 */}
         <button
           type="button"
           onClick={(e) => {
@@ -55,7 +62,7 @@ export function EmergencySuccessModal({ meta, onClose }: Props) {
               className="text-slate-800 leading-loose whitespace-pre-line text-center text-[15px]"
               style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
             >
-              {meta.emergencySuccessBody}
+              {BODY}
             </p>
           </div>
         </button>
@@ -65,9 +72,7 @@ export function EmergencySuccessModal({ meta, onClose }: Props) {
         className="w-full bg-deepSky text-white text-center py-4 px-4 rounded-md mt-4"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="whitespace-pre-line text-xs leading-relaxed">
-          {meta.emergencySuccessNotice}
-        </p>
+        <p className="whitespace-pre-line text-xs leading-relaxed">{NOTICE}</p>
       </div>
     </div>
   );

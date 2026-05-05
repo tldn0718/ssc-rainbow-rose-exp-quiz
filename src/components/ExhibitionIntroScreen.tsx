@@ -1,13 +1,22 @@
-import type { QuizMeta } from "../types";
 import { Sparkles } from "./Sparkles";
 import { PinkButton } from "./PinkButton";
 
 type Props = {
-  meta: QuizMeta;
   onNext: () => void;
 };
 
-export function ExhibitionIntroScreen({ meta, onNext }: Props) {
+const BODY = `B전시실은 '연결'을 주제로 한 전시물로
+구성되어 있습니다.
+
+교통, 뇌의 신경망, 정보 네트워크,
+그리고 우주의 구조까지
+세상의 다양한 시스템은
+서로 연결된 구조 속에서 작동합니다.
+
+이러한 연결을 가능하게 하는 요소로서
+빛의 역할도 함께 살펴볼 수 있습니다.`;
+
+export function ExhibitionIntroScreen({ onNext }: Props) {
   return (
     <div
       className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
@@ -27,7 +36,7 @@ export function ExhibitionIntroScreen({ meta, onNext }: Props) {
             transform: "rotate(-3deg)",
           }}
         >
-          {meta.exhibitionIntroTitle}
+          B전시실 소개
         </h2>
       </div>
 
@@ -40,18 +49,18 @@ export function ExhibitionIntroScreen({ meta, onNext }: Props) {
             className="text-center leading-loose whitespace-pre-line font-bold text-slate-800"
             style={{ fontSize: "16px" }}
           >
-            {meta.exhibitionIntroBody}
+            {BODY}
           </p>
 
           <div className="mt-8">
-            <PinkButton onClick={onNext}>{meta.next}</PinkButton>
+            <PinkButton onClick={onNext}>다음으로</PinkButton>
           </div>
         </div>
       </div>
 
       <div className="relative pb-6 px-6">
         <p className="text-center text-[13px] text-slate-700 font-semibold whitespace-pre-line">
-          {meta.exhibitionIntroNotice}
+          ※ 본 활동지는 B전시실 전시물에만 적용됩니다.
         </p>
       </div>
     </div>

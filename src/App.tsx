@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Exhibit, Question, QuizData } from "./types";
+import { exhibits, questions } from "./data";
 import { StartScreen } from "./components/StartScreen";
 import { EmergencyScreen } from "./components/EmergencyScreen";
 import { ExhibitionIntroScreen } from "./components/ExhibitionIntroScreen";
@@ -17,7 +17,7 @@ type Step =
   | { kind: "question"; questionIndex: number }
   | { kind: "clear" };
 
-function buildFlow(exhibits: Exhibit[], questions: Question[]): Step[] {
+function buildFlow(): Step[] {
   const flow: Step[] = [
     { kind: "start" },
     { kind: "emergency" },
@@ -38,35 +38,16 @@ function buildFlow(exhibits: Exhibit[], questions: Question[]): Step[] {
 }
 
 export default function App() {
-  const [data, setData] = useState<QuizData | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
-
-  useEffect(() => {
-    fetch("/questions.json")
-      .then((r) => r.json())
-      .then((json: QuizData) => setData(json))
-      .catch((err) => console.error("Failed to load questions.json", err));
-  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [stepIndex]);
 
-  const flow = useMemo(() => {
-    if (!data) return [];
-    return buildFlow(data.exhibits, data.questions);
-  }, [data]);
-
-  if (!data) {
-    return (
-      <div className="min-h-[100dvh] flex items-center justify-center text-slate-500">
-        <span className="animate-bounce-soft text-4xl">🌹</span>
-      </div>
-    );
-  }
+  const flow = useMemo(() => buildFlow(), []);
 
   const step = flow[stepIndex];
-  const totalQuestions = data.questions.length;
+  const totalQuestions = questions.length;
 
   const goNext = () => setStepIndex((i) => Math.min(i + 1, flow.length - 1));
   const goToStart = () => setStepIndex(0);
@@ -80,43 +61,30 @@ export default function App() {
 
   return (
     <div className="mx-auto max-w-md min-h-[100dvh] overflow-x-hidden">
-      {step.kind === "start" && (
-        <StartScreen meta={data.meta} onStart={goNext} />
-      )}
+      {step.kind === "start" && <StartScreen onStart={goNext} />}
       {step.kind === "emergency" && (
-        <EmergencyScreen
-          meta={data.meta}
-          onYes={goNext}
-          onNo={goToStart}
-        />
+        <EmergencyScreen onYes={goNext} onNo={goToStart} />
       )}
       {step.kind === "exhibitionIntro" && (
-        <ExhibitionIntroScreen meta={data.meta} onNext={goNext} />
+        <ExhibitionIntroScreen onNext={goNext} />
       )}
       {step.kind === "exhibitsOverview" && (
-        <ExhibitsOverviewScreen
-          meta={data.meta}
-          exhibits={data.exhibits}
-          onNext={goNext}
-        />
+        <ExhibitsOverviewScreen onNext={goNext} />
       )}
       {step.kind === "moveTo" && (
         <MoveToScreen
-          meta={data.meta}
-          exhibit={data.exhibits[step.exhibitIndex]}
-          exhibits={data.exhibits}
+          exhibit={exhibits[step.exhibitIndex]}
           isFirst={isFirstMoveTo(step.exhibitIndex)}
           onNext={goNext}
         />
       )}
       {step.kind === "question" &&
         (() => {
-          const q = data.questions[step.questionIndex];
-          const exhibit = data.exhibits.find((e) => e.id === q.exhibitId)!;
+          const q = questions[step.questionIndex];
+          const exhibit = exhibits.find((e) => e.id === q.exhibitId)!;
           return (
             <QuestionScreen
               key={q.id}
-              meta={data.meta}
               question={q}
               exhibit={exhibit}
               questionNumber={step.questionIndex + 1}
@@ -126,7 +94,7 @@ export default function App() {
             />
           );
         })()}
-      {step.kind === "clear" && <ClearScreen meta={data.meta} />}
+      {step.kind === "clear" && <ClearScreen />}
     </div>
   );
 }

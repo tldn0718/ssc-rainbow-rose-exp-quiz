@@ -1,19 +1,4 @@
-import type { QuizMeta } from "../types";
-
-type Props = {
-  meta: QuizMeta;
-};
-
-/**
- * 디자인 introduce_invitation 기준:
- * - 첫 줄: 영어 ("The Secret Invitation") — 흰 글자 + 검정 외곽선
- * - 둘째 줄: 한글 ("무지개 장미 탐험대") — 핑크 박스 안 그라디언트 글자
- */
-export function EmergencyHeader({ meta }: Props) {
-  const lines = meta.emergencyTitle.split("\n");
-  const en = lines[0] ?? "";
-  const ko = lines[1] ?? "";
-
+export function EmergencyHeader() {
   return (
     <div className="flex flex-col items-center gap-3">
       <h1
@@ -28,7 +13,7 @@ export function EmergencyHeader({ meta }: Props) {
           letterSpacing: "0.01em",
         }}
       >
-        {en}
+        The Secret Invitation
       </h1>
 
       <div
@@ -52,7 +37,7 @@ export function EmergencyHeader({ meta }: Props) {
             letterSpacing: "0.05em",
           }}
         >
-          {ko}
+          무지개 장미 탐험대
         </span>
       </div>
     </div>

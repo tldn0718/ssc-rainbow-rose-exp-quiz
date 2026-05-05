@@ -1,31 +1,34 @@
-import type { Exhibit, QuizMeta } from "../types";
-import { fillTemplate } from "../i18n";
+import type { Exhibit } from "../types";
+import { exhibits } from "../data";
 import { RainbowHeader } from "./RainbowHeader";
 import { Sparkles } from "./Sparkles";
 import { PinkButton } from "./PinkButton";
 import { HallMap } from "./HallMap";
 
 type Props = {
-  meta: QuizMeta;
   exhibit: Exhibit;
-  exhibits: Exhibit[];
   isFirst: boolean;
   onNext: () => void;
 };
 
-export function MoveToScreen({
-  meta,
-  exhibit,
-  exhibits,
-  isFirst,
-  onNext,
-}: Props) {
-  const title = isFirst ? meta.moveToFirstTitle : meta.moveToNextTitle;
-  const bodyTemplate = isFirst ? meta.moveToFirstBody : meta.moveToNextBody;
-  const body = fillTemplate(bodyTemplate, {
-    code: exhibit.code,
-    title: exhibit.title,
-  });
+export function MoveToScreen({ exhibit, isFirst, onNext }: Props) {
+  const title = isFirst
+    ? "무지개장미탐험대\n첫번째 전시물로 출발!"
+    : "다음 전시물로\n이동하세요!";
+
+  const body = isFirst
+    ? `본격적으로 탐험을 시작하기 위해
+첫 번째 전시물로 이동할 시간입니다.
+
+👇 안내된 배치도와 사진을 확인하고
+${exhibit.code} ${exhibit.title} 전시물로
+이동해 주세요.`
+    : `잘 해결했어요, 무지개장미탐험대!
+이제 다음 전시물로 갈 차례입니다.
+
+👇 안내된 배치도와 사진을 확인하고
+${exhibit.code} ${exhibit.title} 전시물로
+이동해 주세요.`;
 
   return (
     <div
@@ -75,18 +78,18 @@ export function MoveToScreen({
         </div>
 
         <div className="mt-5 text-center text-slate-800 text-sm leading-relaxed whitespace-pre-line">
-          {meta.moveToFooter}
+          {"해당 전시물의 패널을 꼼꼼히 살펴보고,\n직접 체험해 보면서 퀴즈를 풀어주세요 💌"}
         </div>
 
         {isFirst && (
           <div className="mt-2 text-center text-slate-800 text-sm">
-            {meta.moveToFirstExtra}
+            무지개장미탐험대의 첫 탐험, 지금 시작합니다! 🌈
           </div>
         )}
 
         <div className="flex-1" />
         <div className="flex justify-center pt-6">
-          <PinkButton onClick={onNext}>{meta.solveQuiz}</PinkButton>
+          <PinkButton onClick={onNext}>퀴즈풀기</PinkButton>
         </div>
       </div>
     </div>

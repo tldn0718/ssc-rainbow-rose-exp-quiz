@@ -1,10 +1,9 @@
 import { useMemo, useState } from "react";
-import type { Exhibit, Question, QuizMeta } from "../types";
+import type { Exhibit, Question } from "../types";
 import { ProgressBar } from "./ProgressBar";
 import { PinkButton } from "./PinkButton";
 
 type Props = {
-  meta: QuizMeta;
   question: Question;
   exhibit: Exhibit;
   questionNumber: number;
@@ -18,7 +17,6 @@ function normalize(input: string) {
 }
 
 export function QuestionScreen({
-  meta,
   question,
   exhibit,
   questionNumber,
@@ -73,8 +71,7 @@ export function QuestionScreen({
             className="font-display text-4xl text-slate-900 shrink-0"
             style={{ fontFamily: "'Black Han Sans','Jua',sans-serif" }}
           >
-            {meta.questionPrefix}
-            {questionNumber}.
+            Q{questionNumber}.
           </h2>
           <div className="flex-1 mt-3">
             <div className="inline-flex items-center gap-2 rounded-full bg-sky-3/60 px-3 py-1.5 text-xs font-bold text-slate-700">
@@ -177,7 +174,7 @@ export function QuestionScreen({
                 const isAnswer = question.answer === v;
                 const showCorrect = submitted && isAnswer;
                 const showWrong = submitted && selected && !isAnswer;
-                const label = v === "O" ? meta.trueLabel : meta.falseLabel;
+                const label = v === "O" ? "O (맞음)" : "X (틀림)";
                 return (
                   <button
                     key={v}
@@ -217,7 +214,7 @@ export function QuestionScreen({
                 value={shortInput}
                 onChange={(e) => setShortInput(e.target.value)}
                 disabled={submitted}
-                placeholder={meta.inputPlaceholder}
+                placeholder="정답을 입력하세요"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && canSubmit && !submitted)
                     handleSubmit();
@@ -233,7 +230,7 @@ export function QuestionScreen({
               />
               {submitted && !isCorrect && (
                 <div className="mt-3 text-sm text-slate-600">
-                  {meta.answerLabel}:{" "}
+                  정답:{" "}
                   <span className="font-bold text-slate-900">
                     {question.answers[0]}
                   </span>
@@ -258,10 +255,10 @@ export function QuestionScreen({
                 isCorrect ? "text-green-600" : "text-red-500",
               ].join(" ")}
             >
-              {isCorrect ? `🎉 ${meta.correct}` : `💭 ${meta.wrong}`}
+              {isCorrect ? "🎉 정답이에요!" : "💭 아쉬워요"}
             </div>
             <div className="text-sm font-bold text-slate-700 mb-1.5">
-              {meta.explanationTitle}
+              🔎 해설
             </div>
             <p className="text-slate-800 leading-relaxed whitespace-pre-line">
               {question.explanation}
@@ -280,10 +277,10 @@ export function QuestionScreen({
         <div className="absolute inset-x-0 bottom-4 flex justify-center">
           {!submitted ? (
             <PinkButton onClick={handleSubmit} disabled={!canSubmit}>
-              {meta.showResult}
+              결과 보기
             </PinkButton>
           ) : (
-            <PinkButton onClick={onNext}>{meta.next}</PinkButton>
+            <PinkButton onClick={onNext}>다음으로</PinkButton>
           )}
         </div>
       </footer>

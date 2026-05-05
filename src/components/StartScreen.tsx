@@ -1,19 +1,16 @@
-import type { QuizMeta } from "../types";
 import { PinkButton } from "./PinkButton";
 
 type Props = {
-  meta: QuizMeta;
   onStart: () => void;
 };
 
-export function StartScreen({ meta, onStart }: Props) {
+export function StartScreen({ onStart }: Props) {
   return (
     <div
       className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: "url(/assets/bg-start.webp)" }}
     >
       <div className="relative flex-1 flex flex-col items-center justify-start pt-[14vh] px-6">
-        {/* 타이틀 + 장미: 이미지 무지개 안쪽에 배치 */}
         <div className="relative animate-pop-in">
           <h1
             className="title-rainbow font-display text-center leading-[0.95] tracking-tight relative z-10"
@@ -53,12 +50,12 @@ export function StartScreen({ meta, onStart }: Props) {
             paddingInline: "0.5rem",
           }}
         >
-          {meta.subtitle}
+          {"잃어버린 장미를 찾기 위한\nB전시실 빛의 탐험이 시작됩니다!"}
         </p>
 
         <div className="mt-6">
           <PinkButton onClick={onStart} size="lg">
-            {meta.startButton}
+            시작
           </PinkButton>
         </div>
       </div>
