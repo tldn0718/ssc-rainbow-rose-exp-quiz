@@ -69,7 +69,7 @@ export function HallMap({
           <div
             key={ex.id}
             data-pin-code={ex.code}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
+            className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
             style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
             aria-label={ex.code}
           >
@@ -89,16 +89,17 @@ export function HallMap({
                   boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
                 }}
               />
-              {/* 노란 핀 — 강조된 전시물에는 노란 핀, 그 외엔 핑크 핀 */}
+              {/* 노란 핀 — 강조된 핀은 살짝 더 큼 */}
               <img
-                src={isHighlight ? "/assets/pin-yellow.png" : "/assets/pin.webp"}
+                src="/assets/pin-yellow.png"
                 alt=""
                 aria-hidden
                 className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{
-                  width: isHighlight ? 16 : 12,
+                  width: isHighlight ? 18 : 15,
                   height: "auto",
-                  bottom: "calc(100% - 3px)",
+                  bottom: "calc(100% - 4px)",
+                  filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.25))",
                 }}
               />
             </div>

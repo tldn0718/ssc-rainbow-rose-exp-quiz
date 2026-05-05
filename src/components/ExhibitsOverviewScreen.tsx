@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { Exhibit } from "../types";
 import { exhibits } from "../data";
-import { Sparkles } from "./Sparkles";
 import { PinkButton } from "./PinkButton";
 import { HallMap } from "./HallMap";
 
@@ -24,10 +23,9 @@ type Arrow = {
 export function ExhibitsOverviewScreen({ onNext }: Props) {
   const byCode = Object.fromEntries(exhibits.map((e) => [e.code, e]));
   const topRow = TOP_CODES.map((c) => byCode[c]).filter(Boolean);
-  const bottomRow = BOTTOM_CODES.map((c) => byCode[c]).filter(Boolean);
 
   const layerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const photoRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [size, setSize] = useState({ w: 0, h: 0 });
 
@@ -39,10 +37,10 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
       setSize({ w: lb.width, h: lb.height });
       const next: Arrow[] = [];
       for (const code of ALL_CODES) {
-        const card = cardRefs.current[code];
+        const photo = photoRefs.current[code];
         const pin = layer.querySelector(`[data-pin-code="${code}"]`);
-        if (!card || !pin) continue;
-        const cb = card.getBoundingClientRect();
+        if (!photo || !pin) continue;
+        const cb = photo.getBoundingClientRect();
         const pb = pin.getBoundingClientRect();
         const isTop = (TOP_CODES as readonly string[]).includes(code);
         const cx = pb.left + pb.width / 2 - lb.left;
@@ -70,16 +68,14 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
   }, []);
 
   return (
-    <div className="relative min-h-[100dvh] flex flex-col overflow-x-hidden bg-sky-1">
-      <Sparkles />
-
-      <div className="relative px-4 pt-8 pb-6 flex-1 flex flex-col">
+    <div className="relative h-[100dvh] flex flex-col overflow-hidden bg-sky-1">
+      <div className="relative px-4 pt-3 pb-3 flex-1 flex flex-col">
         <h2
-          className="font-display text-3xl text-white text-center"
+          className="font-display text-[26px] text-white text-center leading-tight"
           style={{
             fontFamily: "'Black Han Sans','Jua',sans-serif",
             color: "#fff",
-            WebkitTextStroke: "1px #1f2937",
+            WebkitTextStroke: "1.2px #1f2937",
             paintOrder: "stroke fill",
             textShadow: "0 3px 0 #1f2937",
           }}
@@ -87,37 +83,65 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           해당 전시물 소개
         </h2>
 
-        <div ref={layerRef} className="relative mt-5 flex-1 flex flex-col">
+        <div ref={layerRef} className="relative mt-3 flex-1 flex flex-col justify-between gap-2 min-h-0">
+          {/* 위쪽 3개 (B42, B47, B12) */}
           <div className="grid grid-cols-3 gap-2 relative z-10">
-            {topRow.map((ex, i) => (
-              <ExhibitCard
+            {topRow.map((ex) => (
+              <ExhibitItem
                 key={ex.id}
                 exhibit={ex}
-                tilt={i === 0 ? -3 : i === 2 ? 3 : 0}
-                cardRef={(el) => {
-                  cardRefs.current[ex.code] = el;
+                labelPosition="top"
+                photoRef={(el) => {
+                  photoRefs.current[ex.code] = el;
                 }}
               />
             ))}
           </div>
 
-          <div className="mt-8 relative z-0">
+          {/* 지도 */}
+          <div className="relative my-1">
             <HallMap exhibits={exhibits} />
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 relative z-10">
-            {bottomRow.map((ex, i) => (
-              <ExhibitCard
-                key={ex.id}
-                exhibit={ex}
-                tilt={i === 0 ? -3 : 3}
-                cardRef={(el) => {
-                  cardRefs.current[ex.code] = el;
-                }}
-              />
-            ))}
+          {/* 아래쪽: B41 사진 | 라벨 2개 | B26 사진 */}
+          <div className="grid grid-cols-[1fr_1.05fr_1fr] gap-2 items-center relative z-10">
+            <div
+              ref={(el) => {
+                photoRefs.current["B41"] = el;
+              }}
+              className="aspect-square rounded-lg overflow-hidden bg-slate-700 shadow-md"
+            >
+              {byCode["B41"]?.photo && (
+                <img
+                  src={byCode["B41"].photo}
+                  alt={byCode["B41"].title}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5 min-w-0">
+              <BareLabel exhibit={byCode["B41"]} />
+              <BareLabel exhibit={byCode["B26"]} />
+            </div>
+
+            <div
+              ref={(el) => {
+                photoRefs.current["B26"] = el;
+              }}
+              className="aspect-square rounded-lg overflow-hidden bg-slate-700 shadow-md"
+            >
+              {byCode["B26"]?.photo && (
+                <img
+                  src={byCode["B26"].photo}
+                  alt={byCode["B26"].title}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
           </div>
 
+          {/* 화살표 SVG 레이어 */}
           <svg
             className="pointer-events-none absolute inset-0 z-[5]"
             width={size.w}
@@ -135,7 +159,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
                 markerHeight="6"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFD84D" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#F39320" />
               </marker>
             </defs>
             {arrows.map((a) => (
@@ -145,8 +169,8 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
                 y1={a.fromY}
                 x2={a.toX}
                 y2={a.toY}
-                stroke="#FFD84D"
-                strokeWidth="3"
+                stroke="#F39320"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 markerEnd="url(#arrow-head)"
               />
@@ -154,30 +178,31 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           </svg>
         </div>
 
-        <div className="flex justify-center pt-6">
-          <PinkButton onClick={onNext}>시작하기</PinkButton>
+        <div className="flex justify-center pt-3">
+          <PinkButton onClick={onNext} size="sm">
+            시작하기
+          </PinkButton>
         </div>
       </div>
     </div>
   );
 }
 
-function ExhibitCard({
+function ExhibitItem({
   exhibit,
-  tilt = 0,
-  cardRef,
+  photoRef,
 }: {
   exhibit: Exhibit;
-  tilt?: number;
-  cardRef?: (el: HTMLDivElement | null) => void;
+  labelPosition: "top" | "bottom";
+  photoRef?: (el: HTMLDivElement | null) => void;
 }) {
   return (
-    <div
-      ref={cardRef}
-      className="flex flex-col items-center"
-      style={{ transform: `rotate(${tilt}deg)` }}
-    >
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-700 shadow-md">
+    <div className="flex flex-col items-stretch gap-1">
+      <BareLabel exhibit={exhibit} />
+      <div
+        ref={photoRef}
+        className="w-full aspect-square rounded-lg overflow-hidden bg-slate-700 shadow-md"
+      >
         {exhibit.photo && (
           <img
             src={exhibit.photo}
@@ -186,20 +211,24 @@ function ExhibitCard({
           />
         )}
       </div>
-      <div className="mt-1 w-full bg-white rounded-md border border-slate-200 px-1.5 py-1 text-[10px] leading-tight text-center shadow-sm">
-        <div className="flex items-center justify-center gap-0.5">
-          <img
-            src="/assets/pin.webp"
-            alt=""
-            aria-hidden
-            className="w-2 h-auto"
-          />
-          <span className="font-bold text-slate-800">{exhibit.code}</span>
-        </div>
-        <div className="text-slate-700 line-clamp-2 mt-0.5">
-          {exhibit.title}
-        </div>
+    </div>
+  );
+}
+
+function BareLabel({ exhibit }: { exhibit?: Exhibit }) {
+  if (!exhibit) return null;
+  return (
+    <div className="text-white leading-[1.2] text-[10.5px]">
+      <div className="flex items-center gap-1 font-bold">
+        <img
+          src="/assets/pin-yellow.png"
+          alt=""
+          aria-hidden
+          className="w-2.5 h-auto"
+        />
+        <span>{exhibit.code}</span>
       </div>
+      <div className="mt-0.5 line-clamp-2">{exhibit.title}</div>
     </div>
   );
 }
