@@ -99,7 +99,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           </div>
 
           {/* 지도 */}
-          <div className="relative my-1">
+          <div className="relative my-8">
             <HallMap exhibits={exhibits} />
           </div>
 
