@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Jua&family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&family=Poppins:wght@500;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-sky-2 text-slate-800 font-body antialiased;
+  overscroll-behavior: none;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-display;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* TODO[asset]: 무지개 헤더 일러스트(시작 화면 메인 비주얼) — 현재는 CSS 그라디언트 + 타이포로 목업 */
+.rainbow-arc {
+  position: relative;
+  isolation: isolate;
+}
+.rainbow-arc::before {
+  content: "";
+  position: absolute;
+  inset: -10% -20% 30% -20%;
+  background: conic-gradient(
+    from 200deg at 50% 110%,
+    transparent 0deg,
+    transparent 60deg,
+    rgba(255, 143, 163, 0.7) 70deg,
+    rgba(255, 179, 107, 0.7) 80deg,
+    rgba(255, 224, 102, 0.7) 90deg,
+    rgba(181, 228, 140, 0.7) 100deg,
+    rgba(128, 207, 255, 0.7) 110deg,
+    rgba(194, 155, 255, 0.6) 120deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  filter: blur(18px);
+  z-index: -1;
+}
+
+/* 시작 화면 큰 타이틀: 무지개 그라디언트 외곽 둘레 */
+.title-rainbow {
+  background: linear-gradient(180deg, #fff5b8 0%, #ffd1dc 35%, #c7e3ff 70%, #d9c4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px #1f2937;
+  text-shadow:
+    3px 3px 0 #1f2937,
+    -1px -1px 0 #1f2937;
+}
+
+/* 핑크 시작 버튼 위의 줄무늬 표현 */
+.pink-stripes {
+  background-image: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.0) 0%,
+    rgba(255, 255, 255, 0.0) 35%,
+    rgba(255, 255, 255, 0.45) 35%,
+    rgba(255, 255, 255, 0.45) 42%,
+    rgba(255, 255, 255, 0.0) 42%,
+    rgba(255, 255, 255, 0.0) 60%,
+    rgba(255, 255, 255, 0.45) 60%,
+    rgba(255, 255, 255, 0.45) 67%,
+    rgba(255, 255, 255, 0.0) 67%
+  );
+}
+
+/* 별 반짝이 */
+.sparkle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  clip-path: polygon(
+    50% 0%,
+    58% 42%,
+    100% 50%,
+    58% 58%,
+    50% 100%,
+    42% 58%,
+    0% 50%,
+    42% 42%
+  );
+}
+
+/* 진행률 바 — 빨간 줄무늬 격자 */
+.progress-fill {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #ff5a5a 0,
+    #ff5a5a 6px,
+    #ff8b8b 6px,
+    #ff8b8b 12px
+  );
+}
+.progress-track {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #f4d4d4 0,
+    #f4d4d4 6px,
+    #f9e6e6 6px,
+    #f9e6e6 12px
+  );
+}
+
+/* 물결 (시작 화면 하단/퀴즈 하단) */
+.wave-divider {
+  --wave-color: #5DC3EE;
+  background:
+    radial-gradient(ellipse 60px 22px at 0 0, var(--wave-color) 50%, transparent 51%),
+    radial-gradient(ellipse 60px 22px at 60px 0, var(--wave-color) 50%, transparent 51%);
+  background-size: 120px 22px;
+  background-repeat: repeat-x;
+  height: 22px;
+}
