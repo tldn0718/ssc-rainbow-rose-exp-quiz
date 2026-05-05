@@ -49,7 +49,7 @@ export function HallMap({ exhibits }: Props) {
                 }}
               />
               <img
-                src="/assets/pin-yellow.png"
+                src="/assets/pin-yellow.webp"
                 alt=""
                 aria-hidden
                 className="absolute left-1/2 -translate-x-1/2 pointer-events-none"

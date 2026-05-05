@@ -221,7 +221,7 @@ function BareLabel({ exhibit }: { exhibit?: Exhibit }) {
     <div className="text-slate-800 leading-[1.2] text-[10.5px] rounded-md bg-white/55 backdrop-blur-sm px-1.5 py-1">
       <div className="flex items-center gap-1 font-bold">
         <img
-          src="/assets/pin-yellow.png"
+          src="/assets/pin-yellow.webp"
           alt=""
           aria-hidden
           className="w-2.5 h-auto"

@@ -13,7 +13,7 @@ export function StartScreen({ onStart }: Props) {
       <div className="relative flex-1 flex flex-col items-center justify-start pt-[10vh] px-6">
         <div className="relative animate-pop-in w-full flex justify-center">
           <img
-            src="/assets/main-title.png"
+            src="/assets/main-title.webp"
             alt="무지개 장미 탐험대"
             className="w-[320px] max-w-[90%] h-auto select-none"
             draggable={false}

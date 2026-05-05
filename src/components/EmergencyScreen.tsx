@@ -42,7 +42,7 @@ export function EmergencyScreen({ onYes, onNo }: Props) {
       }}
     >
       <img
-        src="/assets/emergency-rainbow.png"
+        src="/assets/emergency-rainbow.webp"
         alt=""
         aria-hidden
         className="absolute inset-x-0 top-0 w-full pointer-events-none"
@@ -62,7 +62,7 @@ export function EmergencyScreen({ onYes, onNo }: Props) {
           }}
         >
           <img
-            src="/assets/envelope-card.png"
+            src="/assets/envelope-card.webp"
             alt=""
             aria-hidden
             className="absolute inset-0 w-full h-full pointer-events-none"

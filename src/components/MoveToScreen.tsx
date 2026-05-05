@@ -10,10 +10,10 @@ type Props = {
 
 export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
   const titleSrc = isFirst
-    ? "/assets/move-title-first.png"
+    ? "/assets/move-title-first.webp"
     : isLast
-      ? "/assets/move-title-last.png"
-      : "/assets/move-title-next.png";
+      ? "/assets/move-title-last.webp"
+      : "/assets/move-title-next.webp";
 
   const subtitle = isFirst
     ? "무지개 장미 탐험대의 미션, 지금 시작합니다!"
@@ -28,7 +28,7 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
     <div
       className="relative min-h-[100dvh] flex flex-col overflow-x-hidden"
       style={{
-        backgroundImage: "url('/assets/bg-move.png')",
+        backgroundImage: "url('/assets/bg-move.webp')",
         backgroundSize: "cover",
         backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",
@@ -69,7 +69,7 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
               <span
                 className="font-semibold"
                 style={{
-                  backgroundImage: "url('/assets/highlight-brush.png')",
+                  backgroundImage: "url('/assets/highlight-brush.webp')",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "100% 70%",
                   backgroundPosition: "0 100%",

@@ -20,7 +20,7 @@ export function ExhibitionIntroScreen({ onNext }: Props) {
   return (
     <div
       className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url(/assets/intro-bg.png)" }}
+      style={{ backgroundImage: "url(/assets/intro-bg.webp)" }}
     >
       <Sparkles />
 

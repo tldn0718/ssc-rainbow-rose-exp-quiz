@@ -33,7 +33,7 @@ export function ClearScreen() {
 
       <div className="relative px-5 pt-8 pb-0 flex-1 flex flex-col items-center min-h-0">
         <img
-          src="/assets/quiz-clear-title.png"
+          src="/assets/quiz-clear-title.webp"
           alt="Quiz Clear"
           className="w-full max-w-[340px] h-auto"
         />
