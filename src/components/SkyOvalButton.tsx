@@ -12,22 +12,24 @@ export function SkyOvalButton({ onClick, children, className = "" }: Props) {
       type="button"
       onClick={onClick}
       className={[
-        "relative px-12 py-3 rounded-full font-display text-2xl",
-        "bg-sky-1 text-white border-[3px] border-deepSky/70",
-        "shadow-[0_5px_0_rgba(30,120,168,0.7),0_10px_22px_rgba(93,195,238,0.4)]",
+        "relative px-10 py-2.5 rounded-full text-xl",
+        "border-[2.5px]",
+        "shadow-[0_4px_0_rgba(30,120,168,0.55)]",
         "transition active:translate-y-[2px]",
         className,
       ].join(" ")}
       style={{
-        fontFamily: "'Black Han Sans','Jua',sans-serif",
-        color: "#fff",
-        WebkitTextStroke: "1px #1E78A8",
-        paintOrder: "stroke fill",
-        letterSpacing: "0.05em",
+        fontFamily: "'Jua', sans-serif",
+        background:
+          "linear-gradient(180deg, #C8ECFA 0%, #A6DEF4 100%)",
+        borderColor: "#1E78A8",
+        color: "#1E4A6E",
+        letterSpacing: "0.04em",
+        minWidth: "112px",
       }}
     >
       <span
-        className="absolute left-6 right-6 top-1.5 h-[5px] rounded-full bg-white/40 blur-[1px]"
+        className="absolute left-5 right-5 top-1 h-[4px] rounded-full bg-white/55 blur-[0.5px]"
         aria-hidden
       />
       <span className="relative">{children}</span>

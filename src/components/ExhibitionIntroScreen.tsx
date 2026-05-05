@@ -9,13 +9,10 @@ type Props = {
 
 export function ExhibitionIntroScreen({ meta, onNext }: Props) {
   return (
-    <div className="relative h-[100dvh] flex flex-col overflow-hidden bg-gradient-to-b from-sky-1 via-sky-2 to-sky-3">
-      <img
-        src="/assets/rainbow.webp"
-        alt=""
-        aria-hidden
-        className="absolute left-1/2 -translate-x-1/2 top-[120px] w-[160%] max-w-none pointer-events-none opacity-90"
-      />
+    <div
+      className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: "url(/assets/intro-bg.png)" }}
+    >
       <Sparkles />
 
       <div className="relative flex flex-col items-center pt-12 px-6">
@@ -34,16 +31,21 @@ export function ExhibitionIntroScreen({ meta, onNext }: Props) {
         </h2>
       </div>
 
-      <div className="relative flex-1 flex flex-col items-center justify-center px-6">
-        <p
-          className="text-center leading-loose whitespace-pre-line font-bold text-slate-800"
-          style={{ fontSize: "16px" }}
+      <div className="relative flex-1 flex flex-col items-center justify-center px-3 mt-2">
+        <div
+          className="relative w-full rounded-3xl px-6 py-10 flex flex-col items-center"
+          style={{ background: "rgba(255, 255, 255, 0.7)" }}
         >
-          {meta.exhibitionIntroBody}
-        </p>
+          <p
+            className="text-center leading-loose whitespace-pre-line font-bold text-slate-800"
+            style={{ fontSize: "16px" }}
+          >
+            {meta.exhibitionIntroBody}
+          </p>
 
-        <div className="mt-10">
-          <PinkButton onClick={onNext}>{meta.next}</PinkButton>
+          <div className="mt-8">
+            <PinkButton onClick={onNext}>{meta.next}</PinkButton>
+          </div>
         </div>
       </div>
 
