@@ -28,20 +28,33 @@ export function PinkButton({
       disabled={disabled}
       className={[
         "relative inline-flex items-center justify-center rounded-full font-display",
-        "bg-pinkBtn text-white shadow-pinkBtn",
-        "border-[3px] border-pinkBtn-dark",
-        "transition active:translate-y-[3px] active:shadow-[0_3px_0_#C72E6F]",
-        "disabled:opacity-60 disabled:cursor-not-allowed",
+        disabled
+          ? "bg-slate-300 text-white border-[3px] border-slate-400 shadow-[0_4px_0_#94a3b8] cursor-not-allowed"
+          : "bg-pinkBtn text-white border-[3px] border-pinkBtn-dark shadow-pinkBtn",
+        "transition active:translate-y-[3px]",
         sizing,
         className,
       ].join(" ")}
       style={{
-        textShadow: "2px 2px 0 #C72E6F, -1px -1px 0 #C72E6F, 1px -1px 0 #C72E6F, -1px 1px 0 #C72E6F",
+        fontFamily: "'Black Han Sans','Jua',sans-serif",
+        color: "#fff",
+        WebkitTextStroke: disabled ? "1px #64748b" : "1px #C72E6F",
+        paintOrder: "stroke fill",
         letterSpacing: "0.05em",
       }}
     >
-      <span className="absolute inset-0 rounded-full pink-stripes opacity-70" aria-hidden />
-      <span className="absolute left-4 right-4 top-1.5 h-[6px] rounded-full bg-white/40 blur-[1px]" aria-hidden />
+      {!disabled && (
+        <>
+          <span
+            className="absolute inset-0 rounded-full pink-stripes opacity-70"
+            aria-hidden
+          />
+          <span
+            className="absolute left-4 right-4 top-1.5 h-[6px] rounded-full bg-white/40 blur-[1px]"
+            aria-hidden
+          />
+        </>
+      )}
       <span className="relative">{children}</span>
     </button>
   );

@@ -15,10 +15,10 @@ export function EmergencyHeader({ meta }: Props) {
         className="font-display text-4xl"
         style={{
           fontFamily: "'Black Han Sans','Jua',sans-serif",
-          color: "#1f2937",
-          WebkitTextStroke: "2px #1f2937",
-          textShadow:
-            "3px 3px 0 #ff6b8a, -1px -1px 0 #ff6b8a, 1px -1px 0 #ff6b8a, -1px 1px 0 #ff6b8a",
+          color: "#ff6b8a",
+          WebkitTextStroke: "1.5px #1f2937",
+          paintOrder: "stroke fill",
+          textShadow: "0 3px 0 #1f2937",
           letterSpacing: "-0.02em",
         }}
       >

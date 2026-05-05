@@ -16,12 +16,13 @@ export function ExhibitionIntroScreen({ meta, onNext }: Props) {
         <Sparkles />
         <div className="relative h-full flex items-center justify-center px-6">
           <h2
-            className="font-display text-5xl text-white text-center"
+            className="font-display text-5xl text-center"
             style={{
               fontFamily: "'Black Han Sans','Jua',sans-serif",
-              WebkitTextStroke: "2px #ffffff",
-              textShadow:
-                "3px 3px 0 #1f2937, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937",
+              color: "#fff",
+              WebkitTextStroke: "1.5px #1f2937",
+              paintOrder: "stroke fill",
+              textShadow: "0 4px 0 #1f2937",
               transform: "rotate(-3deg)",
             }}
           >

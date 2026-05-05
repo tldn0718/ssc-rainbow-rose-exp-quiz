@@ -19,11 +19,17 @@ export function SkyOvalButton({ onClick, children, className = "" }: Props) {
         className,
       ].join(" ")}
       style={{
-        textShadow: "2px 2px 0 #1E78A8, -1px -1px 0 #1E78A8, 1px -1px 0 #1E78A8, -1px 1px 0 #1E78A8",
+        fontFamily: "'Black Han Sans','Jua',sans-serif",
+        color: "#fff",
+        WebkitTextStroke: "1px #1E78A8",
+        paintOrder: "stroke fill",
         letterSpacing: "0.05em",
       }}
     >
-      <span className="absolute left-6 right-6 top-1.5 h-[5px] rounded-full bg-white/40 blur-[1px]" aria-hidden />
+      <span
+        className="absolute left-6 right-6 top-1.5 h-[5px] rounded-full bg-white/40 blur-[1px]"
+        aria-hidden
+      />
       <span className="relative">{children}</span>
     </button>
   );

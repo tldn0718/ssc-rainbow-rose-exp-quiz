@@ -54,16 +54,21 @@ button {
   z-index: -1;
 }
 
-/* 시작 화면 큰 타이틀: 무지개 그라디언트 외곽 둘레 */
+/* 시작 화면 큰 타이틀: paint-order로 stroke가 글자 안쪽을 침범하지 않도록 */
 .title-rainbow {
-  background: linear-gradient(180deg, #fff5b8 0%, #ffd1dc 35%, #c7e3ff 70%, #d9c4ff 100%);
+  color: #fff5d0;
+  -webkit-text-stroke: 5px #4b2e7a;
+  paint-order: stroke fill;
+  text-shadow:
+    0 6px 0 #4b2e7a,
+    0 8px 14px rgba(75, 46, 122, 0.35);
+}
+/* 보조: 글자 안쪽에 부드러운 그라데이션 느낌을 더하기 위한 텍스트(아래 레이어) */
+.title-rainbow-bg {
+  background: linear-gradient(180deg, #fff5b8 0%, #ffd1dc 45%, #c7e3ff 75%, #d9c4ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 2px #1f2937;
-  text-shadow:
-    3px 3px 0 #1f2937,
-    -1px -1px 0 #1f2937;
 }
 
 /* 핑크 시작 버튼 위의 줄무늬 표현 */

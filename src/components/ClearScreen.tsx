@@ -23,10 +23,10 @@ export function ClearScreen({ meta }: Props) {
           className="font-display text-5xl text-center"
           style={{
             fontFamily: "'Black Han Sans','Jua',sans-serif",
-            color: "#fff",
-            WebkitTextStroke: "2px #1f2937",
-            textShadow:
-              "3px 3px 0 #ff6b8a, -1px -1px 0 #ff6b8a, 1px -1px 0 #ff6b8a, -1px 1px 0 #ff6b8a",
+            color: "#fff5d0",
+            WebkitTextStroke: "2px #ef4444",
+            paintOrder: "stroke fill",
+            textShadow: "0 4px 0 #ef4444, 0 7px 0 #1f2937",
             transform: "rotate(-2deg)",
           }}
         >

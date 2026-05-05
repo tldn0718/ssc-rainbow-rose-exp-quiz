@@ -38,15 +38,15 @@ export function MoveToScreen({
       <RainbowHeader height="200px" />
       <Sparkles />
 
-      <div className="relative px-5 pt-6 pb-6 flex-1 flex flex-col">
+      <div className="relative px-5 pt-12 pb-6 flex-1 flex flex-col">
         <h2
-          className="font-display text-3xl text-white text-center leading-tight whitespace-pre-line"
+          className="font-display text-[28px] text-white text-center leading-tight whitespace-pre-line"
           style={{
             fontFamily: "'Black Han Sans','Jua',sans-serif",
-            WebkitTextStroke: "1.5px #ffffff",
-            textShadow:
-              "3px 3px 0 #1f2937, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937",
-            transform: "rotate(-2deg)",
+            color: "#fff",
+            WebkitTextStroke: "1px #1f2937",
+            paintOrder: "stroke fill",
+            textShadow: "0 3px 0 #1f2937",
           }}
         >
           {title}
