@@ -69,7 +69,7 @@ export function EmergencySuccessModal({ onClose }: Props) {
       </div>
 
       <div
-        className="w-full bg-deepSky text-white text-center py-4 px-4 rounded-md mt-4"
+        className="w-full bg-[#3779B4] text-white text-center py-4 px-4 rounded-md mt-4"
         onClick={(e) => e.stopPropagation()}
       >
         <p className="whitespace-pre-line text-xs leading-relaxed">{NOTICE}</p>

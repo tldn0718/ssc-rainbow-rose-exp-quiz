@@ -10,32 +10,13 @@ export function StartScreen({ onStart }: Props) {
       className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: "url(/assets/bg-start.webp)" }}
     >
-      <div className="relative flex-1 flex flex-col items-center justify-start pt-[14vh] px-6">
-        <div className="relative animate-pop-in">
-          <h1
-            className="title-rainbow font-display text-center leading-[0.95] tracking-tight relative z-10"
-            style={{
-              fontFamily: "'Black Han Sans','Jua',sans-serif",
-              fontSize: "62px",
-            }}
-          >
-            <span className="block">무지개</span>
-            <span className="block">장미</span>
-            <span className="block">탐험대</span>
-          </h1>
+      <div className="relative flex-1 flex flex-col items-center justify-start pt-[10vh] px-6">
+        <div className="relative animate-pop-in w-full flex justify-center">
           <img
-            src="/assets/roses.webp"
-            alt=""
-            aria-hidden
-            className="absolute z-20 w-[100px] rotate-[-12deg]"
-            style={{ left: "-72px", top: "92px" }}
-          />
-          <img
-            src="/assets/roses.webp"
-            alt=""
-            aria-hidden
-            className="absolute z-20 w-[100px] rotate-[14deg]"
-            style={{ right: "-72px", top: "44px" }}
+            src="/assets/main-title.png"
+            alt="무지개 장미 탐험대"
+            className="w-[320px] max-w-[90%] h-auto select-none"
+            draggable={false}
           />
         </div>
       </div>
