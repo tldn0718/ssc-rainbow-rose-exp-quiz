@@ -63,7 +63,7 @@ export const questions: Question[] = [
     id: "q3",
     exhibitId: "B41",
     type: "short",
-    question: "프리즘을 통과한 빛이 여러색으로 나뉘는 현상을 무엇이라고 할까요?",
+    question: "프리즘을 통과한 빛이 여러 색으로 나뉘는 현상을 무엇이라고 할까요?",
     image: "/assets/q3-prism.webp",
     answers: ["분광", "빛의 분산", "분산", "스펙트럼"],
     explanation:
@@ -96,7 +96,7 @@ export const questions: Question[] = [
     type: "multiple",
     question: "그림 속 인물의 머리는 무슨 색일까요?",
     image: "/assets/q6-painting.webp",
-    choices: ["노랑색", "초록색", "파란색"],
+    choices: ["노란색", "초록색", "파란색"],
     answerIndex: 0,
     explanation:
       "조명을 바꾸면 같은 그림이라도 머리카락 색이 달라 보여요. 우리가 보는 색은 빛에 따라 달라집니다.",
@@ -137,7 +137,7 @@ export const questions: Question[] = [
     exhibitId: "B12",
     type: "multiple",
     question:
-      "다음 세 가지 판 (아크릴, 유리거울, 구리판)에 손바닥을 찍은 후 적외선 카메라 화면을 확인해보세요. 손자국이 보이지 않는 판은 무엇일까요?",
+      "다음 세 가지 판(아크릴, 유리거울, 구리판)에 손바닥을 찍은 후 적외선 카메라 화면을 확인해보세요. 손자국이 보이지 않는 판은 무엇일까요?",
     image: "/assets/q10-plates.webp",
     choices: ["아크릴", "유리거울", "구리판"],
     answerIndex: 2,
