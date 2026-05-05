@@ -39,7 +39,13 @@ export function ClearScreen() {
         />
 
         <div className="mt-4 w-full rounded-3xl px-5 py-6 bg-white/90 shadow-soft animate-pop-in min-h-0 overflow-y-auto">
-          <p className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[13.5px]">
+          <p
+            className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[13.5px]"
+            style={{
+              fontFamily: "'Jua', sans-serif",
+              letterSpacing: "0.01em",
+            }}
+          >
             {BODY}
           </p>
         </div>
