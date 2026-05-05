@@ -83,7 +83,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           해당 전시물 소개
         </h2>
 
-        <div ref={layerRef} className="relative mt-3 flex-1 flex flex-col justify-between gap-2 min-h-0">
+        <div ref={layerRef} className="relative mt-3 flex flex-col gap-2 min-h-0">
           {/* 위쪽 3개 (B42, B47, B12) */}
           <div className="grid grid-cols-3 gap-2 relative z-10">
             {topRow.map((ex) => (
@@ -178,7 +178,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           </svg>
         </div>
 
-        <div className="flex justify-center pt-3">
+        <div className="mt-auto flex justify-center pt-3">
           <PinkButton onClick={onNext} size="sm">
             시작하기
           </PinkButton>
@@ -218,7 +218,7 @@ function ExhibitItem({
 function BareLabel({ exhibit }: { exhibit?: Exhibit }) {
   if (!exhibit) return null;
   return (
-    <div className="text-white leading-[1.2] text-[10.5px]">
+    <div className="text-slate-800 leading-[1.2] text-[10.5px] rounded-md bg-white/55 backdrop-blur-sm px-1.5 py-1">
       <div className="flex items-center gap-1 font-bold">
         <img
           src="/assets/pin-yellow.png"
