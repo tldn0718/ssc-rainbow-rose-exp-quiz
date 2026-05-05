@@ -26,8 +26,11 @@ export function EmergencyScreen({ meta, onYes, onNo }: Props) {
         <EmergencyHeader meta={meta} />
 
         <div className="relative mt-6 w-full">
-          <div className="relative bg-white rounded-3xl px-6 py-7 shadow-soft">
-            <p className="text-slate-800 leading-loose whitespace-pre-line text-center text-[15px]">
+          <div
+            className="relative rounded-3xl px-6 py-7 shadow-soft"
+            style={{ background: "#62B5DB" }}
+          >
+            <p className="text-white leading-loose whitespace-pre-line text-center text-[15px]">
               {meta.emergencyBody}
             </p>
           </div>

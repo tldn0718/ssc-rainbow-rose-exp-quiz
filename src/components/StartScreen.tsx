@@ -10,7 +10,7 @@ export function StartScreen({ meta, onStart }: Props) {
   return (
     <div
       className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url(/assets/bg-start.png)" }}
+      style={{ backgroundImage: "url(/assets/bg-start.webp)" }}
     >
       <div className="relative flex-1 flex flex-col items-center justify-start pt-[14vh] px-6">
         {/* 타이틀 + 장미: 이미지 무지개 안쪽에 배치 */}
@@ -27,14 +27,14 @@ export function StartScreen({ meta, onStart }: Props) {
             <span className="block">탐험대</span>
           </h1>
           <img
-            src="/assets/roses.png"
+            src="/assets/roses.webp"
             alt=""
             aria-hidden
             className="absolute z-20 w-[100px] rotate-[-12deg]"
             style={{ left: "-72px", top: "92px" }}
           />
           <img
-            src="/assets/roses.png"
+            src="/assets/roses.webp"
             alt=""
             aria-hidden
             className="absolute z-20 w-[100px] rotate-[14deg]"

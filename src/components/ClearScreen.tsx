@@ -33,8 +33,11 @@ export function ClearScreen({ meta }: Props) {
           {meta.clearTitle}
         </h2>
 
-        <div className="mt-4 w-full bg-white/95 rounded-3xl px-5 py-5 shadow-soft animate-pop-in min-h-0 overflow-y-auto">
-          <p className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[14px]">
+        <div
+          className="mt-4 w-full rounded-3xl px-5 py-6 shadow-soft animate-pop-in min-h-0 overflow-y-auto"
+          style={{ background: "#62B5DB" }}
+        >
+          <p className="text-white leading-relaxed whitespace-pre-line text-center text-[14px]">
             {meta.clearBody}
           </p>
         </div>

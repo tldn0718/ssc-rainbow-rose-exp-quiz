@@ -26,7 +26,7 @@ export function Sparkles({ positions = DEFAULT_POSITIONS }: Props) {
       {positions.map((p, i) => (
         <img
           key={i}
-          src="/assets/sparkle.png"
+          src="/assets/sparkle.webp"
           alt=""
           className="absolute animate-twinkle"
           style={{

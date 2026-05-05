@@ -276,7 +276,7 @@ export function QuestionScreen({
 
       <footer className="relative pb-10 mt-4 overflow-hidden">
         <img
-          src="/assets/rainbow.png"
+          src="/assets/rainbow.webp"
           alt=""
           aria-hidden
           className="block w-full"

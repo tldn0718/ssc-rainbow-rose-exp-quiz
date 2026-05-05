@@ -21,7 +21,7 @@ export function HallMap({ exhibits, highlightCode }: Props) {
   return (
     <div className="relative w-full" style={{ aspectRatio: "1037 / 377" }}>
       <img
-        src="/assets/hall-map.png"
+        src="/assets/hall-map.webp"
         alt="B전시실 배치도"
         className="absolute inset-0 w-full h-full object-contain rounded-xl"
       />
@@ -38,7 +38,7 @@ export function HallMap({ exhibits, highlightCode }: Props) {
           >
             <div className={isHighlight ? "animate-bounce-soft relative" : "relative"}>
               <img
-                src="/assets/pin.png"
+                src="/assets/pin.webp"
                 alt=""
                 aria-hidden
                 className="w-5 h-auto drop-shadow"

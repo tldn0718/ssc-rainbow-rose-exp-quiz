@@ -56,6 +56,7 @@ export type QuizMeta = {
   solveQuiz: string;
   showResult: string;
   next: string;
+  startQuizButton: string;
   clearTitle: string;
   clearBody: string;
   clearFooter: string;

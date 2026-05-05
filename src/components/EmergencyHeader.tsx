@@ -6,22 +6,18 @@ type Props = {
 
 export function EmergencyHeader({ meta }: Props) {
   return (
-    <div className="flex items-center gap-3">
-      <img
-        src="/assets/siren.png"
-        alt=""
-        aria-hidden
-        className="w-14 h-14 object-contain"
-      />
+    <div
+      className="w-full rounded-3xl px-6 py-4 text-center"
+      style={{
+        background: "#62B5DB",
+        boxShadow: "0 4px 0 rgba(30,120,168,0.4)",
+      }}
+    >
       <h2
-        className="font-display text-4xl"
+        className="font-display text-2xl text-white whitespace-pre-line leading-snug"
         style={{
           fontFamily: "'Black Han Sans','Jua',sans-serif",
-          color: "#ff6b8a",
-          WebkitTextStroke: "1.5px #1f2937",
-          paintOrder: "stroke fill",
-          textShadow: "0 3px 0 #1f2937",
-          letterSpacing: "-0.02em",
+          letterSpacing: "0.02em",
         }}
       >
         {meta.emergencyTitle}
