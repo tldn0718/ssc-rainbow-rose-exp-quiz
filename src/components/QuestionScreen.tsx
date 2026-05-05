@@ -274,23 +274,20 @@ export function QuestionScreen({
         )}
       </main>
 
-      <footer className="relative pb-10 mt-4 overflow-hidden">
+      <footer className="relative mt-2 overflow-hidden h-[140px]">
         <img
           src="/assets/rainbow.webp"
           alt=""
           aria-hidden
-          className="block w-full"
+          className="absolute inset-x-0 top-0 w-full"
         />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-sky-3" />
-        <div className="relative flex justify-center pt-4">
+        <div className="absolute inset-x-0 bottom-4 flex justify-center">
           {!submitted ? (
             <PinkButton onClick={handleSubmit} disabled={!canSubmit}>
               {meta.showResult}
             </PinkButton>
           ) : (
-            <PinkButton onClick={onNext}>
-              {isLast ? meta.next : meta.next}
-            </PinkButton>
+            <PinkButton onClick={onNext}>{meta.next}</PinkButton>
           )}
         </div>
       </footer>
