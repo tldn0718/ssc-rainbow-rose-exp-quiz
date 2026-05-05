@@ -96,6 +96,16 @@ export function QuestionScreen({
           {question.question}
         </h3>
 
+        {question.image && (
+          <div className="flex justify-center">
+            <img
+              src={question.image}
+              alt=""
+              className="rounded-2xl max-h-56 object-contain"
+            />
+          </div>
+        )}
+
         <div className="flex flex-col gap-3">
           {question.type === "multiple" && (
             <div
@@ -264,39 +274,15 @@ export function QuestionScreen({
         )}
       </main>
 
-      <footer className="relative pt-8 pb-10 mt-4">
-        <div className="absolute inset-x-0 top-0 wave-divider" />
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(180deg, #5DC3EE 0%, #98DCF2 25%, transparent 90%)",
-          }}
+      <footer className="relative pb-10 mt-4 overflow-hidden">
+        <img
+          src="/assets/rainbow.png"
+          alt=""
+          aria-hidden
+          className="block w-full"
         />
-        <div className="absolute inset-0 -z-10 opacity-70">
-          {/* TODO[asset]: 하단 무지개 일러스트 */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 -bottom-32"
-            style={{ width: "180%", height: "300px" }}
-          >
-            <div
-              className="absolute inset-0 rounded-[50%]"
-              style={{
-                background: `radial-gradient(ellipse 60% 50% at 50% 100%,
-                  transparent 0%, transparent 38%,
-                  rgba(255,143,163,0.85) 39%,
-                  rgba(255,179,107,0.85) 44%,
-                  rgba(255,224,102,0.85) 49%,
-                  rgba(181,228,140,0.85) 54%,
-                  rgba(128,207,255,0.85) 59%,
-                  transparent 68%)`,
-                filter: "blur(2px)",
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="relative flex justify-center">
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-sky-3" />
+        <div className="relative flex justify-center pt-4">
           {!submitted ? (
             <PinkButton onClick={handleSubmit} disabled={!canSubmit}>
               {meta.showResult}

@@ -63,12 +63,14 @@ export function MoveToScreen({
         </div>
 
         <div className="mt-4 flex justify-center">
-          {/* TODO[asset]: {exhibit.code} 전시물 사진 — 현재 플레이스홀더 */}
-          <div
-            className="w-48 h-48 rounded-2xl bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center text-white/60 text-4xl shadow-card"
-            aria-label={exhibit.code}
-          >
-            🖼️
+          <div className="w-48 h-48 rounded-2xl overflow-hidden bg-slate-700 shadow-card">
+            {exhibit.photo && (
+              <img
+                src={exhibit.photo}
+                alt={exhibit.title}
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
         </div>
 

@@ -58,15 +58,22 @@ export function ExhibitsOverviewScreen({ meta, exhibits, onNext }: Props) {
 function ExhibitThumb({ exhibit }: { exhibit: Exhibit }) {
   return (
     <div className="text-[11px]">
-      {/* TODO[asset]: 전시물 사진 — 현재 컬러 플레이스홀더 */}
-      <div
-        className="aspect-square rounded-lg bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center text-white/60 text-2xl"
-        aria-label={exhibit.code}
-      >
-        🖼️
+      <div className="aspect-square rounded-lg overflow-hidden bg-slate-700">
+        {exhibit.photo && (
+          <img
+            src={exhibit.photo}
+            alt={exhibit.title}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
       <div className="mt-1.5 flex items-start gap-0.5">
-        <span className="text-pinkBtn shrink-0 leading-none mt-0.5">📍</span>
+        <img
+          src="/assets/pin.png"
+          alt=""
+          aria-hidden
+          className="w-2.5 h-auto shrink-0 mt-0.5"
+        />
         <div className="leading-tight">
           <div className="font-bold text-slate-700">{exhibit.code}</div>
           <div className="text-slate-700 line-clamp-2">{exhibit.title}</div>

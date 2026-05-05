@@ -2,12 +2,14 @@ export type Exhibit = {
   id: string;
   code: string;
   title: string;
+  photo?: string;
 };
 
 type QuestionBase = {
   id: string;
   exhibitId: string;
   question: string;
+  image?: string;
   explanation?: string;
 };
 
