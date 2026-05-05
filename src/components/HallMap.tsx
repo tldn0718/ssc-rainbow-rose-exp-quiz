@@ -3,6 +3,10 @@ import type { Exhibit } from "../types";
 type Props = {
   exhibits: Exhibit[];
   highlightCode?: string;
+  /** 이전 전시물 코드. 지정 시 그 핀에서 highlightCode 핀으로 곡선 경로를 그림. */
+  routeFromCode?: string;
+  /** 첫 이동일 때 입구(우측 'Boom! 씽긋!' 표식)에서 곡선 경로를 그림. */
+  routeFromEntrance?: boolean;
 };
 
 /**
@@ -17,7 +21,23 @@ export const PIN_POSITIONS: Record<string, { x: number; y: number }> = {
   B26: { x: 46, y: 88 },
 };
 
-export function HallMap({ exhibits, highlightCode }: Props) {
+const ENTRANCE_POS = { x: 95, y: 22 };
+
+export function HallMap({
+  exhibits,
+  highlightCode,
+  routeFromCode,
+  routeFromEntrance,
+}: Props) {
+  const targetPos = highlightCode ? PIN_POSITIONS[highlightCode] : undefined;
+  const fromPos = routeFromCode
+    ? PIN_POSITIONS[routeFromCode]
+    : routeFromEntrance
+      ? ENTRANCE_POS
+      : undefined;
+
+  const showRoute = !!(targetPos && fromPos);
+
   return (
     <div
       className="relative w-full"
@@ -29,6 +49,18 @@ export function HallMap({ exhibits, highlightCode }: Props) {
         alt="B전시실 배치도"
         className="absolute inset-0 w-full h-full object-contain rounded-xl"
       />
+
+      {showRoute && (
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <RoutePath from={fromPos} to={targetPos} />
+        </svg>
+      )}
+
       {exhibits.map((ex) => {
         const pos = PIN_POSITIONS[ex.code];
         if (!pos) return null;
@@ -57,25 +89,51 @@ export function HallMap({ exhibits, highlightCode }: Props) {
                   boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
                 }}
               />
-              {/* 핑크 핀 — 빨간 ring 위쪽에 솟아 있음 */}
+              {/* 노란 핀 — 강조된 전시물에는 노란 핀, 그 외엔 핑크 핀 */}
               <img
-                src="/assets/pin.webp"
+                src={isHighlight ? "/assets/pin-yellow.png" : "/assets/pin.webp"}
                 alt=""
                 aria-hidden
                 className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{
-                  width: 12,
+                  width: isHighlight ? 16 : 12,
                   height: "auto",
                   bottom: "calc(100% - 3px)",
                 }}
               />
-              {isHighlight && (
-                <span className="absolute -inset-2 rounded-full border-2 border-red-500 animate-pulse" />
-              )}
             </div>
           </div>
         );
       })}
     </div>
+  );
+}
+
+function RoutePath({
+  from,
+  to,
+}: {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+}) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const dist = Math.hypot(dx, dy);
+  // 곡률: 거리에 비례한 컨트롤 오프셋 (살짝 아래로 휘게)
+  const bend = Math.min(dist * 0.35, 22);
+  const midX = (from.x + to.x) / 2;
+  const midY = (from.y + to.y) / 2 + bend;
+
+  const d = `M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}`;
+
+  return (
+    <path
+      d={d}
+      fill="none"
+      stroke="#F39320"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      vectorEffect="non-scaling-stroke"
+    />
   );
 }
