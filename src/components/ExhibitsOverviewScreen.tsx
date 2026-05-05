@@ -83,7 +83,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           해당 전시물 소개
         </h2>
 
-        <div ref={layerRef} className="relative mt-3 flex flex-col gap-2 min-h-0">
+        <div ref={layerRef} className="relative flex-1 flex flex-col justify-center gap-3 min-h-0">
           {/* 위쪽 3개 (B42, B47, B12) */}
           <div className="grid grid-cols-3 gap-2 relative z-10">
             {topRow.map((ex) => (
@@ -178,7 +178,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
           </svg>
         </div>
 
-        <div className="mt-auto flex justify-center pt-3">
+        <div className="flex justify-center pt-3">
           <PinkButton onClick={onNext} size="sm">
             시작하기
           </PinkButton>
