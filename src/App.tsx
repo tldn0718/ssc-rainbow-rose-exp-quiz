@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { exhibits, questions } from "./data";
 import { StartScreen } from "./components/StartScreen";
 import { EmergencyScreen } from "./components/EmergencyScreen";
-import { ExhibitionIntroScreen } from "./components/ExhibitionIntroScreen";
 import { ExhibitsOverviewScreen } from "./components/ExhibitsOverviewScreen";
 import { MoveToScreen } from "./components/MoveToScreen";
 import { QuestionScreen } from "./components/QuestionScreen";
@@ -11,7 +10,6 @@ import { ClearScreen } from "./components/ClearScreen";
 type Step =
   | { kind: "start" }
   | { kind: "emergency" }
-  | { kind: "exhibitionIntro" }
   | { kind: "exhibitsOverview" }
   | { kind: "moveTo"; exhibitIndex: number }
   | { kind: "question"; questionIndex: number }
@@ -21,7 +19,6 @@ function buildFlow(): Step[] {
   const flow: Step[] = [
     { kind: "start" },
     { kind: "emergency" },
-    { kind: "exhibitionIntro" },
     { kind: "exhibitsOverview" },
   ];
   let lastExhibitId: string | null = null;
@@ -66,9 +63,6 @@ export default function App() {
       {step.kind === "start" && <StartScreen onStart={goNext} />}
       {step.kind === "emergency" && (
         <EmergencyScreen onYes={goNext} onNo={goToStart} />
-      )}
-      {step.kind === "exhibitionIntro" && (
-        <ExhibitionIntroScreen onNext={goNext} />
       )}
       {step.kind === "exhibitsOverview" && (
         <ExhibitsOverviewScreen onNext={goNext} />
