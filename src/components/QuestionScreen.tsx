@@ -60,6 +60,13 @@ export function QuestionScreen({
     setSubmitted(true);
   };
 
+  const handleRetry = () => {
+    setChoiceIndex(null);
+    setOxAnswer(null);
+    setShortInput("");
+    setSubmitted(false);
+  };
+
   return (
     <div className="relative min-h-[100dvh] flex flex-col bg-white overflow-x-hidden">
       <header className="px-5 pt-5">
@@ -285,8 +292,10 @@ export function QuestionScreen({
             <PinkButton onClick={handleSubmit} disabled={!canSubmit}>
               결과 보기
             </PinkButton>
-          ) : (
+          ) : isCorrect ? (
             <PinkButton onClick={onNext}>다음으로</PinkButton>
+          ) : (
+            <PinkButton onClick={handleRetry}>다시 풀기</PinkButton>
           )}
         </div>
       </footer>
