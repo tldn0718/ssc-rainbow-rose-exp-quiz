@@ -7,30 +7,20 @@ type Props = {
 export function StartScreen({ onStart }: Props) {
   return (
     <div
-      className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url(/assets/bg-start.webp)" }}
+      className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-top px-6"
+      style={{ backgroundImage: "url(/assets/bg-page1.webp)" }}
     >
-      <div className="relative flex-1 flex flex-col items-center justify-start pt-[10vh] px-6">
-        <div className="relative animate-pop-in w-full flex justify-center">
-          <img
-            src="/assets/main-title.webp"
-            alt="무지개 장미 탐험대"
-            className="w-[320px] max-w-[90%] h-auto select-none"
-            draggable={false}
-          />
-        </div>
+      <div className="pt-[24vh] flex justify-center">
+        <img
+          src="/assets/main-title.webp"
+          alt="무지개 장미 탐험대"
+          className="w-[320px] max-w-[90%] h-auto select-none animate-pop-in"
+          draggable={false}
+        />
       </div>
 
-      <div className="relative flex flex-col items-center px-6 pb-10 text-center">
-        <p
-          className="font-bold text-slate-800 leading-relaxed whitespace-pre-line text-base"
-          style={{
-            backgroundImage:
-              "linear-gradient(transparent 60%, rgba(180, 235, 100, 0.7) 60%)",
-            backgroundRepeat: "no-repeat",
-            paddingInline: "0.5rem",
-          }}
-        >
+      <div className="mt-auto flex flex-col items-center text-center">
+        <p className="font-bold text-slate-800 leading-relaxed whitespace-pre-line text-base">
           {"잃어버린 장미를 찾기 위한\nB전시실 빛의 탐험이 시작됩니다!"}
         </p>
 
@@ -39,6 +29,15 @@ export function StartScreen({ onStart }: Props) {
             시작
           </PinkButton>
         </div>
+      </div>
+
+      <div className="mt-auto pb-6 pt-10 flex justify-center">
+        <img
+          src="/assets/seoul-science-logo.webp"
+          alt="서울시립과학관"
+          className="h-8 w-auto opacity-90 select-none"
+          draggable={false}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,3 @@
-import { RainbowHeader } from "./RainbowHeader";
-import { Sparkles } from "./Sparkles";
-
 const BODY = `모든 퀴즈를 해결하다니, 정말 대단해!!
 
 전시물을 찾아다니면서 밝혀낸
@@ -22,15 +19,9 @@ const FOOTER = `해당 페이지를 B데스크에 제시하면 소정의 기념�
 export function ClearScreen() {
   return (
     <div
-      className="relative h-[100dvh] flex flex-col overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, #5DC3EE 0%, #87D4F0 25%, #C0E5F4 50%, #BCE3DC 100%)",
-      }}
+      className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-top"
+      style={{ backgroundImage: "url(/assets/bg-page20.webp)" }}
     >
-      <RainbowHeader height="220px" />
-      <Sparkles />
-
       <div className="relative px-5 pt-8 pb-0 flex-1 flex flex-col items-center min-h-0">
         <img
           src="/assets/quiz-clear-title.webp"
@@ -38,7 +29,7 @@ export function ClearScreen() {
           className="w-full max-w-[340px] h-auto"
         />
 
-        <div className="mt-4 w-full rounded-3xl px-5 py-6 bg-white/90 shadow-soft animate-pop-in min-h-0 overflow-y-auto">
+        <div className="relative flex-1 w-full px-[10%] pt-6 pb-4 flex items-center justify-center min-h-0">
           <p
             className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[13.5px]"
             style={{
@@ -50,9 +41,7 @@ export function ClearScreen() {
           </p>
         </div>
 
-        <div className="flex-1 min-h-0" />
-
-        <div className="mt-4 -mx-5 bg-deepSky text-white px-5 py-3 text-center w-[calc(100%+2.5rem)]">
+        <div className="-mx-5 bg-deepSky text-white px-5 py-3 text-center w-[calc(100%+2.5rem)]">
           <p className="leading-relaxed whitespace-pre-line text-[12.5px]">
             {FOOTER}
           </p>
