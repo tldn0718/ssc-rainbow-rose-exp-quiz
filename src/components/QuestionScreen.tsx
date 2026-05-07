@@ -28,6 +28,7 @@ export function QuestionScreen({
   const [oxAnswer, setOxAnswer] = useState<"O" | "X" | null>(null);
   const [shortInput, setShortInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [showMap, setShowMap] = useState(false);
 
   const isCorrect = useMemo(() => {
     if (!submitted) return false;
@@ -74,11 +75,16 @@ export function QuestionScreen({
             Q{questionNumber}.
           </h2>
           <div className="flex-1 mt-3 min-w-0">
-            <div className="flex items-center gap-1.5 rounded-full bg-sky-3/60 px-3 py-1.5 text-[11px] font-bold text-slate-700 max-w-full">
+            <button
+              type="button"
+              onClick={() => setShowMap(true)}
+              aria-label={`${exhibit.code} 위치 배치도 보기`}
+              className="flex items-center gap-1.5 rounded-full bg-sky-3/60 px-3 py-1.5 text-[11px] font-bold text-slate-700 max-w-full text-left transition active:scale-[0.98] hover:bg-sky-3/80 cursor-pointer"
+            >
               <span className="text-pinkBtn shrink-0">📍</span>
               <span className="text-pinkBtn font-bold shrink-0">{exhibit.code}</span>
               <span className="text-slate-700 leading-tight break-keep">{exhibit.title}</span>
-            </div>
+            </button>
           </div>
         </div>
 
@@ -284,6 +290,41 @@ export function QuestionScreen({
           )}
         </div>
       </footer>
+
+      {showMap && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${exhibit.code} 위치 배치도`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          onClick={() => setShowMap(false)}
+        >
+          <div
+            className="relative w-full max-w-md rounded-2xl bg-white p-4 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-pinkBtn">📍</span>
+              <span className="text-pinkBtn font-bold text-sm">{exhibit.code}</span>
+              <span className="text-slate-700 text-sm leading-tight break-keep">
+                {exhibit.title}
+              </span>
+            </div>
+            <img
+              src={`/assets/map-route-${exhibit.code}.webp`}
+              alt={`${exhibit.code} 위치 배치도`}
+              className="w-full h-auto rounded-lg"
+            />
+            <button
+              type="button"
+              onClick={() => setShowMap(false)}
+              className="mt-4 w-full rounded-full bg-pinkBtn text-white font-bold py-2.5 text-sm active:scale-[0.98]"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
