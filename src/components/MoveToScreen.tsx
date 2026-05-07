@@ -17,9 +17,7 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
 
   const subtitle = isFirst
     ? "무지개 장미 탐험대의 미션, 지금 시작합니다!"
-    : isLast
-      ? "잘 해결했어요, 이제 마지막 전시물로 갈 차례입니다!"
-      : "잘 해결했어요, 이제 다음 전시물로 갈 차례입니다!";
+    : "";
 
   const highlightLabel = `'${exhibit.code} ${exhibit.title}'`;
   const mapSrc = `/assets/map-route-${exhibit.code}.webp`;
@@ -42,15 +40,17 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
           className="mx-auto h-[78px] w-auto"
         />
 
-        <p
-          className="mt-2 text-center text-[14px] font-semibold"
-          style={{
-            color: "#fff",
-            textShadow: "0 1px 2px rgba(31,41,55,0.35)",
-          }}
-        >
-          {subtitle}
-        </p>
+        {subtitle && (
+          <p
+            className="mt-2 text-center text-[14px] font-semibold"
+            style={{
+              color: "#fff",
+              textShadow: "0 1px 2px rgba(31,41,55,0.35)",
+            }}
+          >
+            {subtitle}
+          </p>
+        )}
 
         <div className="mt-5 flex items-start gap-3">
           <div className="w-[32%] aspect-square rounded-xl overflow-hidden bg-slate-700 shadow-card flex-shrink-0">

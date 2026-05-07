@@ -80,7 +80,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
             textShadow: "0 3px 0 #1f2937",
           }}
         >
-          해당 전시물 소개
+          전시물 소개
         </h2>
 
         <div ref={layerRef} className="relative flex-1 flex flex-col justify-center gap-3 min-h-0">
@@ -122,7 +122,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
 
             <div className="flex flex-col gap-1.5 min-w-0">
               <BareLabel exhibit={byCode["B41"]} />
-              <BareLabel exhibit={byCode["B26"]} />
+              <BareLabel exhibit={byCode["B26"]} align="right" />
             </div>
 
             <div
@@ -159,7 +159,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
                 markerHeight="6"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#F39320" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFFF80" />
               </marker>
             </defs>
             {arrows.map((a) => (
@@ -169,7 +169,7 @@ export function ExhibitsOverviewScreen({ onNext }: Props) {
                 y1={a.fromY}
                 x2={a.toX}
                 y2={a.toY}
-                stroke="#F39320"
+                stroke="#FFFF80"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 markerEnd="url(#arrow-head)"
@@ -215,11 +215,20 @@ function ExhibitItem({
   );
 }
 
-function BareLabel({ exhibit }: { exhibit?: Exhibit }) {
+function BareLabel({
+  exhibit,
+  align = "left",
+}: {
+  exhibit?: Exhibit;
+  align?: "left" | "right";
+}) {
   if (!exhibit) return null;
+  const isRight = align === "right";
   return (
     <div className="text-slate-800 leading-[1.2] text-[10.5px] rounded-md bg-white/55 backdrop-blur-sm px-1.5 py-1">
-      <div className="flex items-center gap-1 font-bold">
+      <div
+        className={`flex items-center gap-1 font-bold ${isRight ? "justify-end" : ""}`}
+      >
         <img
           src="/assets/pin-yellow.webp"
           alt=""

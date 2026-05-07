@@ -73,11 +73,11 @@ export function QuestionScreen({
           >
             Q{questionNumber}.
           </h2>
-          <div className="flex-1 mt-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-sky-3/60 px-3 py-1.5 text-xs font-bold text-slate-700">
-              <span className="text-pinkBtn">📍</span>
-              <span className="text-pinkBtn font-bold">{exhibit.code}</span>
-              <span className="text-slate-700">{exhibit.title}</span>
+          <div className="flex-1 mt-3 min-w-0">
+            <div className="flex items-center gap-1.5 rounded-full bg-sky-3/60 px-3 py-1.5 text-[11px] font-bold text-slate-700 max-w-full">
+              <span className="text-pinkBtn shrink-0">📍</span>
+              <span className="text-pinkBtn font-bold shrink-0">{exhibit.code}</span>
+              <span className="text-slate-700 leading-tight break-keep">{exhibit.title}</span>
             </div>
           </div>
         </div>

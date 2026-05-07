@@ -88,7 +88,7 @@ export const questions: Question[] = [
       "빨간색 사과에 백색광을 비추면 빨간색의 빛이 반사되어 우리 눈에 들어온다.",
     answer: "O",
     explanation:
-      "사과는 빨간 빛만 반사하고 나머지 색은 흡수해요. 그래서 우리 눈에는 빨갛게 보이는 거예요.",
+      "빨간색 사과는 빨간 빛만 반사하고 나머지 색은 흡수해요. 그래서 우리 눈에는 빨갛게 보이는 거예요.",
   },
   {
     id: "q6",
@@ -108,7 +108,7 @@ export const questions: Question[] = [
     question:
       "전시물 속 <열린 창가에서 편지를 읽는 여인> 작품에서 소장자가 덧칠하여 가렸던 그림은 무엇일까요?",
     image: "/assets/q7-vermeer.webp",
-    answers: ["큐피드", "큐피드 그림", "큐피드상"],
+    answers: ["큐피드", "큐피트", "큐피드 그림", "큐피트 그림", "큐피드상", "큐피트상"],
     explanation:
       "벽에 걸린 큐피드 그림이 덧칠로 가려져 있었지만, 복원 작업으로 다시 모습을 드러냈어요.",
   },
@@ -118,8 +118,7 @@ export const questions: Question[] = [
     type: "multiple",
     question:
       "<열린 창가에서 편지를 읽는 여인> 작품 속 숨겨진 그림은 어떤 빛을 이용해 알아냈을까요?",
-    image: "/assets/q7-vermeer.webp",
-    choices: ["자외선", "X선", "적외선"],
+    choices: ["자외선 (Ultraviolet, UV)", "X선 (X-ray)", "적외선 (Infrared, IR)"],
     answerIndex: 1,
     explanation: "X선 촬영으로 덧칠 아래 숨어 있던 큐피드 그림이 발견되었어요.",
   },
@@ -137,9 +136,9 @@ export const questions: Question[] = [
     exhibitId: "B12",
     type: "multiple",
     question:
-      "다음 세 가지 판(아크릴, 유리거울, 구리판)에 손바닥을 찍은 후 적외선 카메라 화면을 확인해보세요. 손자국이 보이지 않는 판은 무엇일까요?",
+      "다음 세 가지 판(아크릴, 거울, 구리판)에 손바닥을 찍은 후 적외선 카메라 화면을 확인해보세요. 손자국이 보이지 않는 판은 무엇일까요?",
     image: "/assets/q10-plates.webp",
-    choices: ["아크릴", "유리거울", "구리판"],
+    choices: ["아크릴", "거울", "구리판"],
     answerIndex: 2,
     explanation:
       "구리는 열전도율이 매우 높은 금속이라 손이 닿은 순간 생긴 열이 빠르게 주변으로 퍼집니다. 그 결과 표면의 온도 차이가 금방 사라져 적외선 카메라로도 손자국이 잘 남지 않습니다.",
