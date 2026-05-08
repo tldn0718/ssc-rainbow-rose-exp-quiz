@@ -125,7 +125,7 @@ export function QuestionScreen({
               {question.choices.map((choice, i) => {
                 const selected = choiceIndex === i;
                 const isAnswer = question.answerIndex === i;
-                const showCorrect = submitted && isAnswer;
+                const showCorrect = submitted && isCorrect && isAnswer;
                 const showWrong = submitted && selected && !isAnswer;
                 const compact =
                   question.choices.length === 3 &&
@@ -185,7 +185,7 @@ export function QuestionScreen({
               {(["O", "X"] as const).map((v) => {
                 const selected = oxAnswer === v;
                 const isAnswer = question.answer === v;
-                const showCorrect = submitted && isAnswer;
+                const showCorrect = submitted && isCorrect && isAnswer;
                 const showWrong = submitted && selected && !isAnswer;
                 const label = v === "O" ? "O (맞음)" : "X (틀림)";
                 return (
@@ -241,19 +241,11 @@ export function QuestionScreen({
                     : "border-roseAccent text-slate-800 focus:border-pinkBtn",
                 ].join(" ")}
               />
-              {submitted && !isCorrect && (
-                <div className="mt-3 text-sm text-slate-600">
-                  정답:{" "}
-                  <span className="font-bold text-slate-900">
-                    {question.answers[0]}
-                  </span>
-                </div>
-              )}
             </div>
           )}
         </div>
 
-        {submitted && question.explanation && (
+        {submitted && (
           <div
             className={[
               "rounded-bubble p-5 mt-2 animate-fade-up",
@@ -270,12 +262,22 @@ export function QuestionScreen({
             >
               {isCorrect ? "🎉 정답이에요!" : "💭 아쉬워요"}
             </div>
-            <div className="text-sm font-bold text-slate-700 mb-1.5">
-              🔎 해설
-            </div>
-            <p className="text-slate-800 leading-relaxed whitespace-pre-line">
-              {question.explanation}
-            </p>
+            {isCorrect ? (
+              question.explanation && (
+                <>
+                  <div className="text-sm font-bold text-slate-700 mb-1.5">
+                    🔎 해설
+                  </div>
+                  <p className="text-slate-800 leading-relaxed whitespace-pre-line">
+                    {question.explanation}
+                  </p>
+                </>
+              )
+            ) : (
+              <p className="text-slate-800 leading-relaxed font-bold">
+                패널을 참고하세요
+              </p>
+            )}
           </div>
         )}
       </main>
