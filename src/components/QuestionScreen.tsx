@@ -274,8 +274,8 @@ export function QuestionScreen({
                 </>
               )
             ) : (
-              <p className="text-slate-800 leading-relaxed font-bold">
-                패널을 참고하세요
+              <p className="text-slate-800 leading-relaxed font-bold whitespace-pre-line">
+                {"앗, 조금 어려웠나요?\n전시물에 놓인 블루미의 편지를 다시 읽어보고, 패널과 체험 요소도 함께 살펴보세요."}
               </p>
             )}
           </div>
