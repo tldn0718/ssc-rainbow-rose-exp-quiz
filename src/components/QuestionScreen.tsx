@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import type { Exhibit, Question } from "../types";
 import { ProgressBar } from "./ProgressBar";
-import { PinkButton } from "./PinkButton";
+import { SkyOvalButton } from "./SkyOvalButton";
+import { ExhibitLocation } from "./ExhibitLocation";
 
 type Props = {
   question: Question;
@@ -16,6 +17,11 @@ function normalize(input: string) {
   return input.trim().toLowerCase().replace(/\s+/g, "");
 }
 
+function parseNumber(input: string): number | null {
+  const m = input.replace(/,/g, "").match(/-?\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+}
+
 export function QuestionScreen({
   question,
   exhibit,
@@ -28,7 +34,6 @@ export function QuestionScreen({
   const [oxAnswer, setOxAnswer] = useState<"O" | "X" | null>(null);
   const [shortInput, setShortInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [showMap, setShowMap] = useState(false);
 
   const isCorrect = useMemo(() => {
     if (!submitted) return false;
@@ -41,6 +46,10 @@ export function QuestionScreen({
         const n = normalize(shortInput);
         return question.answers.some((a) => normalize(a) === n);
       }
+      case "numeric": {
+        const v = parseNumber(shortInput);
+        return v !== null && v >= question.min;
+      }
     }
   }, [submitted, question, choiceIndex, oxAnswer, shortInput]);
 
@@ -52,6 +61,8 @@ export function QuestionScreen({
         return oxAnswer !== null;
       case "short":
         return shortInput.trim().length > 0;
+      case "numeric":
+        return parseNumber(shortInput) !== null;
     }
   }, [question, choiceIndex, oxAnswer, shortInput]);
 
@@ -82,21 +93,12 @@ export function QuestionScreen({
             Q{questionNumber}.
           </h2>
           <div className="flex-1 mt-3 min-w-0">
-            <button
-              type="button"
-              onClick={() => setShowMap(true)}
-              aria-label={`${exhibit.code} 위치 배치도 보기`}
-              className="flex items-center gap-1.5 rounded-full bg-sky-3/60 px-3 py-1.5 text-[11px] font-bold text-slate-700 max-w-full text-left transition active:scale-[0.98] hover:bg-sky-3/80 cursor-pointer"
-            >
-              <span className="text-pinkBtn shrink-0">📍</span>
-              <span className="text-pinkBtn font-bold shrink-0">{exhibit.code}</span>
-              <span className="text-slate-700 leading-tight break-keep">{exhibit.title}</span>
-            </button>
+            <ExhibitLocation exhibit={exhibit} />
           </div>
         </div>
 
         <h3
-          className="font-display text-2xl text-slate-900 leading-snug"
+          className="font-display text-2xl text-slate-900 leading-snug whitespace-pre-line"
           style={{ fontFamily: "'Black Han Sans','Jua',sans-serif" }}
         >
           {question.question}
@@ -187,7 +189,6 @@ export function QuestionScreen({
                 const isAnswer = question.answer === v;
                 const showCorrect = submitted && isCorrect && isAnswer;
                 const showWrong = submitted && selected && !isAnswer;
-                const label = v === "O" ? "O (맞음)" : "X (틀림)";
                 return (
                   <button
                     key={v}
@@ -195,7 +196,7 @@ export function QuestionScreen({
                     disabled={submitted}
                     onClick={() => setOxAnswer(v)}
                     className={[
-                      "aspect-square rounded-3xl border-[2.5px] flex flex-col items-center justify-center gap-2 transition",
+                      "rounded-full border-[2.5px] py-4 flex items-center justify-center transition",
                       submitted
                         ? showCorrect
                           ? "bg-green-50 border-green-500 text-green-600"
@@ -208,26 +209,30 @@ export function QuestionScreen({
                     ].join(" ")}
                   >
                     <span
-                      className="font-display text-7xl leading-none"
+                      className="font-display text-5xl leading-none"
                       style={{ fontFamily: "'Black Han Sans','Jua',sans-serif" }}
                     >
-                      {v === "O" ? "O" : "X"}
+                      {v}
                     </span>
-                    <span className="text-sm font-bold">{label}</span>
                   </button>
                 );
               })}
             </div>
           )}
 
-          {question.type === "short" && (
+          {(question.type === "short" || question.type === "numeric") && (
             <div>
               <input
                 type="text"
+                inputMode={question.type === "numeric" ? "numeric" : "text"}
                 value={shortInput}
                 onChange={(e) => setShortInput(e.target.value)}
                 disabled={submitted}
-                placeholder="정답을 입력하세요"
+                placeholder={
+                  question.type === "numeric"
+                    ? "측정한 숫자를 입력하세요"
+                    : "정답을 입력하세요"
+                }
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && canSubmit && !submitted)
                     handleSubmit();
@@ -275,67 +280,24 @@ export function QuestionScreen({
               )
             ) : (
               <p className="text-slate-800 leading-relaxed font-bold whitespace-pre-line">
-                {"앗, 조금 어려웠나요?\n전시물에 놓인 블루미의 편지를 다시 읽어보고, 패널과 체험 요소도 함께 살펴보세요."}
+                {"앗, 조금 어려웠나요?\n전시물의 패널과 체험 요소를 다시 한 번 살펴보세요."}
               </p>
             )}
           </div>
         )}
       </main>
 
-      <footer className="relative mt-2 overflow-hidden h-[140px]">
-        <img
-          src="/assets/rainbow.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-x-0 top-0 w-full"
-        />
-        <div className="absolute inset-x-0 bottom-4 flex justify-center">
-          {!submitted ? (
-            <PinkButton onClick={handleSubmit} disabled={!canSubmit}>
-              결과 보기
-            </PinkButton>
-          ) : isCorrect ? (
-            <PinkButton onClick={onNext}>다음으로</PinkButton>
-          ) : (
-            <PinkButton onClick={handleRetry}>다시 풀기</PinkButton>
-          )}
-        </div>
+      <footer className="mt-2 pb-8 pt-6 flex justify-center">
+        {!submitted ? (
+          <SkyOvalButton onClick={handleSubmit} disabled={!canSubmit}>
+            결과 보기
+          </SkyOvalButton>
+        ) : isCorrect ? (
+          <SkyOvalButton onClick={onNext}>다음으로</SkyOvalButton>
+        ) : (
+          <SkyOvalButton onClick={handleRetry}>다시 풀기</SkyOvalButton>
+        )}
       </footer>
-
-      {showMap && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${exhibit.code} 위치 배치도`}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
-          onClick={() => setShowMap(false)}
-        >
-          <div
-            className="relative w-full max-w-md rounded-2xl bg-white p-4 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-pinkBtn">📍</span>
-              <span className="text-pinkBtn font-bold text-sm">{exhibit.code}</span>
-              <span className="text-slate-700 text-sm leading-tight break-keep">
-                {exhibit.title}
-              </span>
-            </div>
-            <img
-              src={`/assets/map-route-${exhibit.code}.webp`}
-              alt={`${exhibit.code} 위치 배치도`}
-              className="w-full h-auto rounded-lg"
-            />
-            <button
-              type="button"
-              onClick={() => setShowMap(false)}
-              className="mt-4 w-full rounded-full bg-pinkBtn text-white font-bold py-2.5 text-sm active:scale-[0.98]"
-            >
-              닫기
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

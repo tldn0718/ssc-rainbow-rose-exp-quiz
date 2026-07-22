@@ -1,59 +1,35 @@
-import type { Exhibit } from "../types";
-import { PinkButton } from "./PinkButton";
+import type { Exhibit, Transport } from "../types";
+import { SkyOvalButton } from "./SkyOvalButton";
 
 type Props = {
+  transport: Transport;
   exhibit: Exhibit;
-  isFirst: boolean;
-  isLast: boolean;
   onNext: () => void;
 };
 
-export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
-  const titleSrc = isFirst
-    ? "/assets/move-title-first.webp"
-    : isLast
-      ? "/assets/move-title-last.webp"
-      : "/assets/move-title-next.webp";
-
-  const subtitle = isFirst
-    ? "무지개 장미 탐험대의 미션, 지금 시작합니다!"
-    : "";
-
+export function MoveToScreen({ transport, exhibit, onNext }: Props) {
   const highlightLabel = `'${exhibit.code} ${exhibit.title}'`;
-  const mapSrc = `/assets/map-route-${exhibit.code}.webp`;
 
   return (
-    <div
-      className="relative min-h-[100dvh] flex flex-col overflow-x-hidden"
-      style={{
-        backgroundImage: "url('/assets/bg-move.webp')",
-        backgroundSize: "cover",
-        backgroundPosition: "top center",
-        backgroundRepeat: "no-repeat",
-        backgroundColor: "#E8F8FA",
-      }}
-    >
-      <div className="relative px-5 pt-8 pb-6 flex-1 flex flex-col">
-        <img
-          src={titleSrc}
-          alt=""
-          className="mx-auto h-[78px] w-auto"
-        />
+    <div className="relative min-h-[100dvh] flex flex-col overflow-x-hidden bg-white">
+      <div className="relative px-5 pt-10 pb-6 flex-1 flex flex-col">
+        <h1
+          className="text-center text-[32px] leading-[1.2] text-slate-900"
+          style={{ fontFamily: "'Black Han Sans','Jua',sans-serif" }}
+        >
+          {transport.ordinal}
+          <br />: {transport.vehicle}
+        </h1>
 
-        {subtitle && (
-          <p
-            className="mt-2 text-center text-[14px] font-semibold"
-            style={{
-              color: "#fff",
-              textShadow: "0 1px 2px rgba(31,41,55,0.35)",
-            }}
-          >
-            {subtitle}
-          </p>
-        )}
+        <p
+          className="mt-6 text-center text-[14px] leading-relaxed whitespace-pre-line text-slate-800"
+          style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
+        >
+          {transport.intro}
+        </p>
 
-        <div className="mt-5 flex items-start gap-3">
-          <div className="w-[32%] aspect-square rounded-xl overflow-hidden bg-slate-700 shadow-card flex-shrink-0">
+        <div className="mt-8 flex items-center gap-3">
+          <div className="w-[36%] aspect-square rounded-xl overflow-hidden bg-slate-200 shadow-card flex-shrink-0">
             {exhibit.photo && (
               <img
                 src={exhibit.photo}
@@ -63,16 +39,16 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
             )}
           </div>
 
-          <div className="flex-1 min-w-0 pt-1 text-[12px] leading-[1.65] text-slate-800">
-            <div>왼쪽 사진과 아래 지도를 확인하고</div>
-            <div className="my-0.5 whitespace-nowrap overflow-hidden text-[11px]">
+          <div className="flex-1 min-w-0 text-[13px] leading-[1.7] text-slate-800">
+            <div>왼쪽 사진을 확인하고</div>
+            <div className="my-0.5">
               <span
                 className="font-semibold"
                 style={{
-                  backgroundImage: "url('/assets/highlight-brush.webp')",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "100% 70%",
-                  backgroundPosition: "0 100%",
+                  background:
+                    "linear-gradient(transparent 35%, #D3F36B 35%, #D3F36B 92%, transparent 92%)",
+                  WebkitBoxDecorationBreak: "clone",
+                  boxDecorationBreak: "clone",
                   paddingLeft: "2px",
                   paddingRight: "2px",
                 }}
@@ -84,22 +60,14 @@ export function MoveToScreen({ exhibit, isFirst, isLast, onNext }: Props) {
           </div>
         </div>
 
-        <div className="mt-5">
-          <img
-            src={mapSrc}
-            alt={`${exhibit.code} 위치 지도`}
-            className="w-full h-auto"
-          />
-        </div>
-
-        <div className="mt-6 text-center text-slate-800 text-[14px] leading-[1.6]">
+        <div className="mt-10 text-center text-slate-800 text-[14px] leading-[1.7]">
           <div>전시물 앞에 도착하셨다면,</div>
           <div>아래 버튼을 눌러 퀴즈를 풀어주세요.</div>
         </div>
 
         <div className="flex-1" />
-        <div className="flex justify-center pt-6">
-          <PinkButton onClick={onNext}>퀴즈풀기</PinkButton>
+        <div className="flex justify-center pt-8 pb-2">
+          <SkyOvalButton onClick={onNext}>퀴즈 풀기</SkyOvalButton>
         </div>
       </div>
     </div>

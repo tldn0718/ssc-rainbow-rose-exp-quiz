@@ -1,4 +1,4 @@
-import { PinkButton } from "./PinkButton";
+import { SkyOvalButton } from "./SkyOvalButton";
 
 type Props = {
   onStart: () => void;
@@ -6,28 +6,25 @@ type Props = {
 
 export function StartScreen({ onStart }: Props) {
   return (
-    <div
-      className="relative h-[100dvh] flex flex-col overflow-hidden bg-cover bg-top px-6"
-      style={{ backgroundImage: "url(/assets/bg-page1.webp)" }}
-    >
-      <div className="pt-[24vh] flex justify-center">
+    <div className="relative h-[100dvh] flex flex-col overflow-hidden bg-white px-6">
+      <div className="pt-[20vh] flex justify-center">
         <img
-          src="/assets/main-title.webp"
-          alt="무지개 장미 탐험대"
-          className="w-[320px] max-w-[90%] h-auto select-none animate-pop-in"
+          src="/assets/bloomi-go-title.webp"
+          alt="블루미 GO!"
+          className="w-[300px] max-w-[85%] h-auto select-none animate-pop-in"
           draggable={false}
         />
       </div>
 
       <div className="mt-auto flex flex-col items-center text-center">
         <p className="font-bold text-slate-800 leading-relaxed whitespace-pre-line text-base">
-          {"잃어버린 장미를 찾기 위한\nB전시실 빛의 탐험이 시작됩니다!"}
+          {"교통수단 속 과학을 하나씩 알아가며\n특별한 여행지로 떠나보자!"}
         </p>
 
-        <div className="mt-6">
-          <PinkButton onClick={onStart} size="lg">
+        <div className="mt-8">
+          <SkyOvalButton onClick={onStart} className="px-14 text-2xl">
             시작
-          </PinkButton>
+          </SkyOvalButton>
         </div>
       </div>
 
