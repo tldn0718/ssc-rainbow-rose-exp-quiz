@@ -1,4 +1,5 @@
 import type { Transport } from "../types";
+import { RichText } from "./RichText";
 import { SkyOvalButton } from "./SkyOvalButton";
 
 type Props = {
@@ -36,7 +37,7 @@ export function TransportCompleteScreen({ transport, onNext }: Props) {
             className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[14.5px]"
             style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
           >
-            {transport.complete}
+            <RichText text={transport.complete} />
           </p>
         </div>
 

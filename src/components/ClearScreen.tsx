@@ -1,3 +1,4 @@
+import { RichText } from "./RichText";
 import { SkyOvalButton } from "./SkyOvalButton";
 
 type Props = {
@@ -7,15 +8,16 @@ type Props = {
 const BODY = `모든 퀴즈를 해결하다니, 정말 대단해! 👏
 
 우리가 매일 이용하는 다양한 교통수단 속에는
-생각보다 많은 과학 원리가 숨어 있다는 걸
+생각보다 많은 **과학 원리**가 숨어 있다는 걸
 알게 되었지? 🚲🚌🚇🚢
 
 이제 앞으로 교통수단을 이용할 때마다
-"이 안에는 어떤 과학이 숨어 있을까?"
+__"이 안에는 어떤 과학이 숨어 있을까?"__
 하고 한 번 떠올려 봐!
 
 그리고 드디어…
-블루미가 준비한 특별한 목적지를 공개할 시간이야! ✨
+==블루미가 준비한 **특별한 목적지**==를
+공개할 시간이야! ✨
 
 너희가 도착할 곳은 바로…`;
 
@@ -34,7 +36,7 @@ export function ClearScreen({ onNext }: Props) {
             className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[14.5px]"
             style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
           >
-            {BODY}
+            <RichText text={BODY} />
           </p>
         </div>
 

@@ -48,7 +48,7 @@ export function QuestionScreen({
       }
       case "numeric": {
         const v = parseNumber(shortInput);
-        return v !== null && v >= question.min;
+        return v !== null && (question.min === undefined || v >= question.min);
       }
     }
   }, [submitted, question, choiceIndex, oxAnswer, shortInput]);

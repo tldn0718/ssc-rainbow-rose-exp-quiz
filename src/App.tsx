@@ -25,9 +25,9 @@ function buildFlow(): Step[] {
   const flow: Step[] = [
     { kind: "start" },
     { kind: "invitation" },
-    // 추가요청사항: 3(이용안내)·4(이동 경로) 페이지 순서 변경 — 경로를 먼저 보여준다
-    { kind: "route" },
+    // 수정사항(2026-07): 이용안내(경로 보기) → 이동 경로(퀴즈 시작) 순서로 진행
     { kind: "guide" },
+    { kind: "route" },
   ];
   transports.forEach((t, ti) => {
     flow.push({ kind: "moveTo", transportIndex: ti });

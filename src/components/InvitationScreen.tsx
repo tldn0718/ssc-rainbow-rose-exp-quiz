@@ -4,23 +4,18 @@ type Props = {
   onNext: () => void;
 };
 
-const BODY = `안녕! 나는 B전시실 길잡이 요정 블루미야. 🌈
+/** 본문은 디자인 시안 이미지로 표시 (수정사항: 본문 이미지파일로 변경) */
+const BODY_ALT = `안녕! 나는 B전시실 길잡이 요정 블루미야.
 여름방학을 맞아 특별한 여행을 준비했어!
-그치만, 여행의 목적지는 아직 비밀이야. 🤫
-
-목적지를 알아내려면 블루미가 준비한
-특별한 여행 코스를 따라가야 해.
+하지만 여행의 목적지는 아직 비밀이야. 🤫
+목적지를 알아내려면 블루미가 준비한 다양한 교통수단을 이용해야 해!
+각 교통수단에는 흥미로운 과학 원리가 숨어 있어.
+그 원리를 이해해야 안전한 여행을 완성할 수 있지.
 이번 여행에서는 자전거부터 버스, 지하철, 배까지!
-다양한 교통수단을 이용해 볼 거야.
-
-그런데, 각 교통수단 속에 숨겨진 과학을 알아야
-안전한 여행을 완성할 수 있어.
-B전시실 곳곳의 전시물을 찾아가며
-퀴즈를 하나씩 해결해 보자!
-
-모든 퀴즈를 풀고 여행 준비를 완료하면
-블루미가 숨겨둔 특별한 목적지를 공개할게!
-🚲🚗🚌🚇🚢`;
+블루미와 함께 다양한 이동경로를 따라
+B전시실 곳곳에 있는 전시물을 찾아 퀴즈를 하나씩 풀어 보자.
+모든 퀴즈를 해결하고 여행 준비를 마치면,
+블루미가 숨겨 둔 특별한 목적지를 공개할게!`;
 
 export function InvitationScreen({ onNext }: Props) {
   return (
@@ -35,12 +30,12 @@ export function InvitationScreen({ onNext }: Props) {
       </div>
 
       <div className="flex-1 w-full px-6 pt-5 pb-4 flex items-center justify-center">
-        <p
-          className="text-slate-800 leading-relaxed whitespace-pre-line text-center text-[14.5px]"
-          style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
-        >
-          {BODY}
-        </p>
+        <img
+          src="/assets/invitation-body.webp"
+          alt={BODY_ALT}
+          className="w-full max-w-[350px] h-auto select-none"
+          draggable={false}
+        />
       </div>
 
       <div className="pb-10 pt-2 flex justify-center shrink-0">

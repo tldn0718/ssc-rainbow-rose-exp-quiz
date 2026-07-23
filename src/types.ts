@@ -45,10 +45,10 @@ export type ShortAnswerQuestion = QuestionBase & {
   answers: string[];
 };
 
-/** 숫자 입력형 — min 이상이면 정답 처리 */
+/** 숫자 입력형 — 숫자를 입력하면 정답 처리 (min 지정 시 min 이상만 정답) */
 export type NumericQuestion = QuestionBase & {
   type: "numeric";
-  min: number;
+  min?: number;
 };
 
 export type Question =

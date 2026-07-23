@@ -31,7 +31,7 @@ export function GuideScreen({ onNext }: Props) {
           {BODY}
         </p>
 
-        <SkyOvalButton onClick={onNext}>퀴즈 시작</SkyOvalButton>
+        <SkyOvalButton onClick={onNext}>경로 보기</SkyOvalButton>
       </div>
     </div>
   );

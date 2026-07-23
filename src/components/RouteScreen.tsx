@@ -17,6 +17,14 @@ export function RouteScreen({ onNext }: Props) {
         }}
       >
         <div className="flex-1 overflow-y-auto">
+          <div className="pt-6 pb-1 flex justify-center">
+            <img
+              src="/assets/route-title.webp"
+              alt="이동 경로"
+              className="w-[150px] h-auto select-none"
+              draggable={false}
+            />
+          </div>
           <img
             src="/assets/route-map.webp"
             alt="블루미의 이동 경로 — 총 소요시간 약 15분"
@@ -26,7 +34,7 @@ export function RouteScreen({ onNext }: Props) {
         </div>
 
         <div className="py-4 flex justify-center shrink-0 bg-white/70">
-          <SkyOvalButton onClick={onNext}>다음</SkyOvalButton>
+          <SkyOvalButton onClick={onNext}>퀴즈 시작</SkyOvalButton>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import type { Exhibit } from "../types";
 import { ExhibitLocation } from "./ExhibitLocation";
+import { RichText } from "./RichText";
 
 type Props = {
   exhibit: Exhibit;
@@ -8,7 +9,7 @@ type Props = {
 const BODY = `🌌 B전시실 관천대! 🌌
 
 시원한 과학관에서 편하게 누워
-캐나다의 아름다운 오로라를 감상하며
+~~캐나다의 아름다운 %%**오로라**%%를 감상하며~~
 특별한 여름 여행을 마무리해 보자! 💙`;
 
 /** 목적지 공개 — 관천대 */
@@ -41,7 +42,7 @@ export function DestinationScreen({ exhibit }: Props) {
             className="text-slate-800 leading-loose whitespace-pre-line text-center text-[15px]"
             style={{ fontFamily: "'Jua', sans-serif", letterSpacing: "0.01em" }}
           >
-            {BODY}
+            <RichText text={BODY} />
           </p>
         </div>
       </div>
