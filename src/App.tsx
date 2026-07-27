@@ -9,6 +9,7 @@ import { QuestionScreen } from "./components/QuestionScreen";
 import { TransportCompleteScreen } from "./components/TransportCompleteScreen";
 import { ClearScreen } from "./components/ClearScreen";
 import { DestinationScreen } from "./components/DestinationScreen";
+import { recordCompletion } from "./viewCount";
 
 type Step =
   | { kind: "start" }
@@ -53,6 +54,10 @@ export default function App() {
 
   const step = flow[stepIndex];
   const totalQuestions = questions.length;
+
+  useEffect(() => {
+    if (step.kind === "destination") recordCompletion();
+  }, [step.kind]);
 
   const goNext = () => setStepIndex((i) => Math.min(i + 1, flow.length - 1));
 
