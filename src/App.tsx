@@ -56,7 +56,7 @@ export default function App() {
   const totalQuestions = questions.length;
 
   useEffect(() => {
-    if (step.kind === "destination") recordCompletion();
+    if (step.kind === "clear") recordCompletion();
   }, [step.kind]);
 
   const goNext = () => setStepIndex((i) => Math.min(i + 1, flow.length - 1));
