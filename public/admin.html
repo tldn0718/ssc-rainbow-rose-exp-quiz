@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>블루미 GO! 집계</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0; padding: 24px 16px;
+        font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+        max-width: 520px; margin-inline: auto;
+      }
+      h1 { font-size: 18px; margin: 0 0 4px; }
+      .sub { color: #888; font-size: 13px; margin: 0 0 20px; }
+      .bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+      button, select {
+        font: inherit; padding: 6px 12px; border-radius: 6px;
+        border: 1px solid #bbb; background: transparent; color: inherit; cursor: pointer;
+      }
+      button:disabled { opacity: .5; cursor: default; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #ddd; }
+      th { font-size: 13px; color: #888; font-weight: 600; }
+      td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+      tfoot td { font-weight: 700; border-bottom: none; }
+      .msg { padding: 12px 14px; border-radius: 8px; background: #f5f5f5; font-size: 14px; white-space: pre-wrap; }
+      .msg.err { background: #fdecec; color: #a11; }
+      .stamp { color: #999; font-size: 12px; margin-top: 14px; }
+      @media (prefers-color-scheme: dark) {
+        th, td { border-color: #333; }
+        .msg { background: #222; }
+        .msg.err { background: #3a1c1c; color: #f88; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>블루미 GO! 일별 집계</h1>
+    <p class="sub">퀴즈 클리어 화면에 도달한 수 (KST 기준, 세션당 1회)</p>
+
+    <div class="bar">
+      <select id="collection">
+        <option value="pageViews">운영 (pageViews)</option>
+        <option value="pageViewsDev">개발 (pageViewsDev)</option>
+      </select>
+      <button id="reload">새로고침</button>
+    </div>
+
+    <div id="out"></div>
+    <p class="stamp" id="stamp"></p>
+
+    <script>
+      // 이 값들은 src/viewCount.ts와 같다. 정적 HTML이라 모듈을 import할 수 없어 중복해 둔다.
+      const PROJECT_ID = "gen-lang-client-0630377070";
+      const API_KEY = "AIzaSyAXqNa1FCppXE_km0m1bzRdHwYZGw7EkBs";
+      const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+
+      const out = document.getElementById("out");
+      const stamp = document.getElementById("stamp");
+      const reloadBtn = document.getElementById("reload");
+      const collectionSel = document.getElementById("collection");
+
+      const show = (html) => { out.innerHTML = html; };
+      const msg = (text, isError) => show(`<div class="msg${isError ? " err" : ""}">${text}</div>`);
+
+      // 문서가 많아지면 nextPageToken으로 나눠 오므로 끝까지 따라간다
+      async function fetchAll(collection) {
+        const docs = [];
+        let token = "";
+        do {
+          const url = `${BASE}/${collection}?key=${API_KEY}&pageSize=300`
+            + (token ? `&pageToken=${encodeURIComponent(token)}` : "");
+          const res = await fetch(url, { cache: "no-store" });
+          const body = await res.json();
+          if (!res.ok) {
+            const e = new Error(body?.error?.message || `HTTP ${res.status}`);
+            e.status = res.status;
+            throw e;
+          }
+          docs.push(...(body.documents ?? []));
+          token = body.nextPageToken ?? "";
+        } while (token);
+        return docs;
+      }
+
+      function render(docs) {
+        if (!docs.length) return msg("아직 집계된 문서가 없습니다.");
+
+        // 문서 ID가 YYYY-MM-DD라 문자열 정렬로 날짜 정렬이 된다
+        const rows = docs
+          .map((d) => ({
+            date: d.name.split("/").pop(),
+            count: Number(d.fields?.count?.integerValue ?? 0),
+          }))
+          .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+        const total = rows.reduce((sum, r) => sum + r.count, 0);
+        show(`
+          <table>
+            <thead><tr><th>날짜</th><th class="n">완주 수</th></tr></thead>
+            <tbody>
+              ${rows.map((r) => `<tr><td>${r.date}</td><td class="n">${r.count.toLocaleString()}</td></tr>`).join("")}
+            </tbody>
+            <tfoot><tr><td>합계 (${rows.length}일)</td><td class="n">${total.toLocaleString()}</td></tr></tfoot>
+          </table>
+        `);
+      }
+
+      async function load() {
+        reloadBtn.disabled = true;
+        msg("불러오는 중…");
+        try {
+          render(await fetchAll(collectionSel.value));
+          stamp.textContent = `조회 시각 ${new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (KST)`;
+        } catch (e) {
+          if (e.status === 403) {
+            msg(
+              `읽기 권한이 없습니다 (403).\n\nFirestore 규칙의 ${collectionSel.value} 블록에 다음 한 줄을 추가하고 게시하세요.\n\n    allow read: if true;`,
+              true,
+            );
+          } else {
+            msg(`조회 실패: ${e.message}`, true);
+          }
+          stamp.textContent = "";
+        } finally {
+          reloadBtn.disabled = false;
+        }
+      }
+
+      reloadBtn.addEventListener("click", load);
+      collectionSel.addEventListener("change", load);
+      load();
+    </script>
+  </body>
+</html>

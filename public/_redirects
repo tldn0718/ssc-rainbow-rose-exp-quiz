@@ -1,0 +1,3 @@
+# Netlify: /admin 으로도 집계 페이지에 들어갈 수 있게 한다.
+# 200(rewrite)이라 주소창은 /admin 그대로 유지된다.
+/admin  /admin.html  200
